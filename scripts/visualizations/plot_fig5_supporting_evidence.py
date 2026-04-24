@@ -37,9 +37,9 @@ SIGNAL_LABELS = {
 X_LABELS = {
     'S_to_H': 'S->H',
     'S_to_S': 'S->S',
-    'Isolated_Storm': 'Isolated\nstorm',
+    'Isolated_Storm': 'Isol.\nstorm',
     'Concurrent': 'Concurrent',
-    'Isolated_Heatwave': 'Isolated\nheatwave',
+    'Isolated_Heatwave': 'Isol.\nheatwave',
     'H_to_H': 'H->H',
     'H_to_S': 'H->S',
 }
@@ -86,8 +86,8 @@ def _panel_a(ax, df):
     ax.set_xlabel('')
     ax.set_ylabel('Final algae change')
     ax.set_xticks(range(len(order)))
-    ax.set_xticklabels([X_LABELS[s] for s in order], fontsize=6.9, rotation=24, ha='right', rotation_mode='anchor')
-    ax.tick_params(axis='x', pad=1.6)
+    ax.set_xticklabels([X_LABELS[s] for s in order], fontsize=6.9, rotation=0, ha='center')
+    ax.tick_params(axis='x', pad=2.2)
     clean_axis(ax)
 
 
@@ -128,14 +128,16 @@ def _panel_b(ax, df):
     ax.set_xlabel('Relative coral loss')
     ax.set_ylabel('Final algae change')
     ax.legend(
-        loc='upper left',
-        fontsize=6.8,
+        loc='lower left',
+        bbox_to_anchor=(0.0, 1.025, 1.0, 0.14),
+        mode='expand',
+        fontsize=7.2,
         frameon=False,
-        ncol=2,
+        ncol=3,
         handletextpad=0.12,
-        columnspacing=0.42,
-        labelspacing=0.20,
-        borderaxespad=0.15,
+        columnspacing=0.30,
+        labelspacing=0.10,
+        borderaxespad=0.0,
     )
     clean_axis(ax)
 
@@ -193,7 +195,7 @@ def plot_fig5():
     add_panel_label(ax_b, 'B', x=-0.10)
     add_panel_label(ax_c, 'C', x=-0.10)
 
-    apply_layout(fig, 'main_landscape', left=0.078, right=0.985, bottom=0.18, top=0.93)
+    apply_layout(fig, 'main_landscape', left=0.078, right=0.985, bottom=0.18, top=0.88)
     save_publication_figure(fig, OUTPUT)
     plt.close()
 

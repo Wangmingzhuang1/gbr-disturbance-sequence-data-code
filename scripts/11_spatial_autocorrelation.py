@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -10,6 +11,9 @@ from scipy.stats import norm
 import config
 
 matplotlib.use('Agg')
+
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'visualizations'))
+from style_config import FS_ANNOT, FS_LABEL, FS_TICK, apply_pub_style, clean_axis, publication_size
 
 
 COORDS = os.path.join(config.DATA_DIR, 'sites_decimal.csv')
@@ -81,17 +85,25 @@ def run_spatial_diagnostics():
     results = pd.DataFrame(rows)
     results.to_csv(config.SPATIAL_DIAGNOSTICS_PATH, index=False)
 
-    fig, ax = plt.subplots(figsize=(7.2, 4.6))
+    apply_pub_style()
+    fig, ax = plt.subplots(figsize=publication_size('supplement', 90))
     colors = ['#9f1d35' if sig else '#8f99a3' for sig in results['significant']]
     ax.bar(results['threshold_km'].astype(str) + ' km', results['morans_i'], color=colors, edgecolor='#333333', width=0.62)
-    ax.axhline(0, color='#7b8085', linestyle='--', linewidth=1)
-    ax.set_xlabel('Distance threshold')
-    ax.set_ylabel("Moran's I")
-    ax.set_title('Supplementary Figure S6. Spatial autocorrelation of main-model residuals', loc='left', fontsize=12, fontweight='bold')
+    ax.axhline(0, color='#7b8085', linestyle='--', linewidth=0.9)
+    ax.set_xlabel('Distance threshold', fontsize=FS_LABEL, fontweight='bold')
+    ax.set_ylabel("Moran's I", fontsize=FS_LABEL, fontweight='bold')
+    ax.set_ylim(results['morans_i'].min() - 0.025, results['morans_i'].max() + 0.035)
     for idx, row in results.iterrows():
-        ax.text(idx, row['morans_i'] + 0.01, f"p={row['p_value']:.3f}", ha='center', va='bottom', fontsize=8)
+        offset = 0.008 if row['morans_i'] >= 0 else -0.008
+        va = 'bottom' if row['morans_i'] >= 0 else 'top'
+        ax.text(idx, row['morans_i'] + offset, f"p = {row['p_value']:.3f}", ha='center', va=va, fontsize=FS_ANNOT)
+    ax.tick_params(axis='both', labelsize=FS_TICK)
+    clean_axis(ax)
     plt.tight_layout()
-    plt.savefig(config.FIGS5_PATH, dpi=300, bbox_inches='tight')
+    plt.savefig(config.FIGS5_PATH, dpi=600, bbox_inches='tight')
+    base, _ = os.path.splitext(config.FIGS5_PATH)
+    plt.savefig(base + '.svg', format='svg', bbox_inches='tight')
+    plt.savefig(base + '.pdf', format='pdf', bbox_inches='tight')
     plt.close()
 
     print(results.to_string(index=False))
