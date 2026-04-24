@@ -1,0 +1,5 @@
+model_name,n_events,n_reefs,dropped_vs_retained,drop_share_vs_retained
+all_retained_sequences,120,66,0,0.0
+main_model,118,66,2,0.016666666666666666
+ecological_pressure,118,66,2,0.016666666666666666
+biological_covariates,70,45,50,0.4166666666666667

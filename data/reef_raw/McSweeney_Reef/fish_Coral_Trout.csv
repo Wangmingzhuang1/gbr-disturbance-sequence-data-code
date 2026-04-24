@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","McSweeney Reef",2020,"2019.8931506849315068","Coral Trout",7.92785483619604,3.266911233458454,14.568278314902818,"LTMP",9,"_"," ",8.38162774021657,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2021,"2020.947945205479452","Coral Trout",12.315712343637234,6.3530888581697225,20.09101922700253,"LTMP",9,"_"," ",12.67597579911671,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2022,"2021.7945205479452054","Coral Trout",25.476743967746756,12.072571566598363,47.85207827436281,"LTMP",9,"_"," ",27.00008966966985,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2023,"2022.8958904109589041","Coral Trout",18.783847191199833,10.152260348499462,30.98200024205348,"LTMP",9,"_"," ",19.531825538734363,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2024,"2023.9013698630136986","Coral Trout",25.922630105126025,12.090271709372196,47.94526212190322,"LTMP",9,"_"," ",27.37054948709175,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2025,"2024.9561643835616438","Coral Trout",23.70342372751933,11.802564980325423,43.11429597736457,"LTMP",9,"_"," ",24.916087172286076,"restricted","9.0m"
+"fish","reef","McSweeney Reef",2026,"2025.9534246575342465","Coral Trout",8.196684910042142,4.5893378214467715,13.124728160508873,"LTMP",9,"_"," ",8.534309476652421,"restricted","9.0m"

@@ -1,0 +1,9 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Fore and Aft Reef",2006,"2006.5260273972602739","Coral Trout",3.5803187576338336,0.874166029844136,9.02088386607363,"LTMP",9,"_"," ",4.138419865720582,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2008,"2008.3589041095890411","Coral Trout",5.4393203037507405,1.7245083839862645,12.31695590497974,"LTMP",9,"_"," ",6.17765097873462,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2010,"2010.23013698630136986","Coral Trout",3.5970784116695325,1.6603358154868928,6.251779905628256,"LTMP",9,"_"," ",3.780699403298477,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2012,"2012.2958904109589041","Coral Trout",8.182902061717053,2.510900620651239,18.56737288328542,"LTMP",9,"_"," ",9.198101773930627,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2014,"2014.32602739726027397","Coral Trout",5.26660619936688,0.41015356511213474,20.818663406401516,"LTMP",9,"_"," ",7.338281624395067,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2016,"2016.336986301369863","Coral Trout",5.500660157097774,2.359248963560861,10.694890971130734,"LTMP",9,"_"," ",5.983651015648965,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2018,"2018.29863013698630136","Coral Trout",8.75545476681824,2.9541642658181075,19.904386692450235,"LTMP",9,"_"," ",9.649078156121103,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2020,"2020.4191780821917808","Coral Trout",3.821765270746025,1.5328039703203582,8.00330838898171,"LTMP",9,"_"," ",4.150223576813845,"restricted","9.0m"

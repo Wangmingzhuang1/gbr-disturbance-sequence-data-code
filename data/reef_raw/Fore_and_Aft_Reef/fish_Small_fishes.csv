@@ -1,0 +1,9 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Fore and Aft Reef",2006,"2006.5260273972602739","Small fishes",58.598238388629944,45.52777515089095,75.659402645777,"LTMP",9,"_"," ",59.04964894608986,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2008,"2008.3589041095890411","Small fishes",62.61557280513611,47.53368770510316,78.74765114515354,"LTMP",9,"_"," ",62.96361728139934,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2010,"2010.23013698630136986","Small fishes",67.42228007801519,51.23560121922608,86.29478766733494,"LTMP",9,"_"," ",68.16555024211387,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2012,"2012.29315068493150687","Small fishes",38.8031437833353,29.20941942280962,49.08684942396266,"LTMP",9,"_"," ",39.09547467805227,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2014,"2014.32602739726027397","Small fishes",93.90759058914338,71.93009237010267,117.6247802406475,"LTMP",9,"_"," ",94.85621834387888,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2016,"2016.336986301369863","Small fishes",117.5752900246865,93.16495559705402,151.490511521876,"LTMP",9,"_"," ",118.52945074034841,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2018,"2018.29863013698630136","Small fishes",84.98080361287893,64.20606708277535,107.61508624827181,"LTMP",9,"_"," ",85.60801939309754,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2020,"2020.4191780821917808","Small fishes",95.74669733162887,71.93929897907418,120.99641930460749,"LTMP",9,"_"," ",96.88015271365475,"restricted","9.0m"

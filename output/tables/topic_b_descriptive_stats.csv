@@ -1,0 +1,8 @@
+seq_category_main,rel_loss_mean,rel_loss_std,rel_loss_count,baseline_hc_mean,storm_exposure_seq_mean,heat_exposure_seq_mean,gap_years_mean
+Concurrent,0.369,,1,30.009,33.078,6.71,
+H_to_H,0.186,0.598,34,28.688,0.0,14.37,2.853
+H_to_S,0.939,,1,54.544,25.534,4.21,2.0
+Isolated_Heatwave,-0.049,0.721,13,22.738,0.0,6.266,
+Isolated_Storm,0.114,0.432,42,26.096,27.059,0.695,
+S_to_H,0.432,0.212,10,24.784,29.854,6.557,2.3
+S_to_S,0.25,0.583,19,31.685,56.625,2.096,1.895

@@ -1,0 +1,9 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Small Lagoon Reef",2006,"2006.021917808219178082","Large fishes",71.61093059610042,65.80372831987539,77.2076542673029,"LTMP",9,"_"," ",71.57525446772883,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2008,"2008.0958904109589041","Large fishes",50.89299009989192,46.6286698320707,55.775837895792534,"LTMP",9,"_"," ",50.982004275374216,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2010,"2009.8","Large fishes",61.80872980709667,56.671732856432996,66.98480672087456,"LTMP",9,"_"," ",61.93201351199738,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2012,"2012.024657534246575342","Large fishes",52.91834593901146,47.89597762340413,57.21429715427067,"LTMP",9,"_"," ",52.906605153744444,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2014,"2013.8986301369863013","Large fishes",59.70317307134955,54.770386749017874,65.13441508661681,"LTMP",9,"_"," ",59.80285017551154,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2016,"2016.030136986301369864","Large fishes",55.41619155931883,50.67149305504744,60.42115056025982,"LTMP",9,"_"," ",55.351494081341066,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2018,"2018.049315068493150684","Large fishes",44.836448826205626,40.457842431059966,48.78867557880004,"LTMP",9,"_"," ",44.87774976349433,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2020,"2020.052054794520547946","Large fishes",59.47301501935411,53.77358043045499,64.07522053512572,"LTMP",9,"_"," ",59.51450879980957,"restricted","9.0m"

@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","McCulloch Reef",2006,"2005.9123287671232877","Small fishes",71.54608175060758,62.14807853200223,82.54305765091988,"LTMP",9,"_"," ",71.64955528646354,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2008,"2007.6684931506849315","Small fishes",253.80063487073218,222.73019893460494,286.5478094994527,"LTMP",9,"_"," ",254.58030394333576,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2010,"2009.9095890410958904","Small fishes",67.07597514853938,56.98603975883484,75.8311690611933,"LTMP",9,"_"," ",67.15513128506701,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2012,"2012.15342465753424658","Small fishes",103.50845175913719,89.99607224788998,117.9582101648772,"LTMP",9,"_"," ",103.67095030081978,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2016,"2015.9452054794520548","Small fishes",80.0365141820636,69.0649827742761,90.48114649983384,"LTMP",9,"_"," ",80.33061280311618,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2018,"2017.9698630136986301","Small fishes",100.10668520777429,85.6826115948012,113.32623683676564,"LTMP",9,"_"," ",100.41504504958586,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2020,"2020.136986301369863","Small fishes",73.15514100382755,63.243730556118265,84.43905134778043,"LTMP",9,"_"," ",73.38432865637358,"restricted","9.0m"

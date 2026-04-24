@@ -1,0 +1,11 @@
+model_name,response,reference_category,term,Coefficient,StdErr,P-value,CI_lower,CI_upper
+absolute_loss_main,absolute_loss,Isolated_Heatwave,Intercept,14.040191429068681,5.19191450419674,0.006846048311717486,3.8642259900319385,24.216156868105422
+absolute_loss_main,absolute_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",-5.238273929233781,5.4261643423876,0.3343578926980053,-15.873360614508943,5.396812756041381
+absolute_loss_main,absolute_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",-5.2152131620118,6.879234737933783,0.44838543692670596,-18.69826548955885,8.267839165535252
+absolute_loss_main,absolute_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",-4.567673835506302,6.205770032241057,0.4617084282025067,-16.730759595036744,7.595411924024141
+absolute_loss_main,absolute_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",-13.263428374283517,9.985420638735985,0.18408582778050697,-32.83449319668899,6.307636448121954
+absolute_loss_main,absolute_loss,Isolated_Heatwave,storm_exposure_seq_c,0.32425046239541105,0.13582549813666164,0.01697458933387698,0.05803737786534202,0.5904635469254801
+absolute_loss_main,absolute_loss,Isolated_Heatwave,heat_exposure_seq_c,1.1315993970829485,0.490779533949244,0.021126372833719195,0.1696891861930775,2.0935096079728197
+absolute_loss_main,absolute_loss,Isolated_Heatwave,baseline_hc_c,0.7728836670598598,0.08392543271190807,3.2865304565942565e-20,0.6083928415575802,0.9373744925621393
+absolute_loss_main,absolute_loss,Isolated_Heatwave,start_year_c,-0.17754236464300738,0.17545613773291605,0.31159050551461775,-0.521430075466022,0.1663453461800073
+absolute_loss_main,absolute_loss,Isolated_Heatwave,region_lat_c,0.5063599010955007,0.37325656704875215,0.17490830579925187,-0.2252095273131135,1.237929329504115

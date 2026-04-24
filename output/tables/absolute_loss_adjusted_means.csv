@@ -1,0 +1,6 @@
+model_name,response,reference_category,seq_category,adjusted_mean,ci_lo,ci_hi,n_events
+absolute_loss_main,absolute_loss,Isolated_Heatwave,H_to_H,8.564521689227607,-2.9184243881587695,19.9200309283529,34
+absolute_loss_main,absolute_loss,Isolated_Heatwave,Isolated_Heatwave,13.802795618461388,3.882688593587075,23.77677159143784,13
+absolute_loss_main,absolute_loss,Isolated_Heatwave,Isolated_Storm,8.587582456449589,2.1818093234425686,15.044099426617437,42
+absolute_loss_main,absolute_loss,Isolated_Heatwave,S_to_H,9.235121782955087,5.504652422226581,13.190985633651591,10
+absolute_loss_main,absolute_loss,Isolated_Heatwave,S_to_S,0.5393672441778709,-11.313703381224107,11.872506805037457,19

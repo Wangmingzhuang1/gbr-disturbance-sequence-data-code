@@ -1,0 +1,5 @@
+analysis,statistic,p_value,degrees_freedom,note
+s_to_h_by_period,0.8506729374877524,0.8373122133305017,3.0,Chi-square test of S_to_H frequency across fixed periods
+s_to_h_by_sector,0.7699217321337137,0.8566469901116464,3.0,Chi-square test of S_to_H frequency across sectors
+sequence_composition_by_period,89.09916124302474,7.375439433388502e-14,12.0,Chi-square test of full sequence composition across periods
+s_to_h_start_year_spearman,-0.037260329075224835,0.6887284336380646,,Spearman correlation between start year and S_to_H indicator

@@ -1,0 +1,9 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Small Lagoon Reef",2006,"2006.021917808219178082","Coral Trout",7.300092499450439,4.681839752290403,10.652624009240345,"LTMP",9,"_"," ",7.508013874355493,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2008,"2008.0958904109589041","Coral Trout",7.880723653238178,4.629345031935651,11.726251565092772,"LTMP",9,"_"," ",8.084347047967883,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2010,"2009.8","Coral Trout",4.592869599729242,2.673384017873098,6.867824209175511,"LTMP",9,"_"," ",4.688371657123118,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2012,"2012.024657534246575342","Coral Trout",17.224979749105437,11.203329725784005,23.82096159295219,"LTMP",9,"_"," ",17.55612565875192,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2014,"2013.8986301369863013","Coral Trout",12.563394155620106,8.143185637420087,17.69506656335965,"LTMP",9,"_"," ",12.803620116000213,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2016,"2016.030136986301369864","Coral Trout",6.350700818784337,3.679780047799935,9.312648952597158,"LTMP",9,"_"," ",6.502046694593673,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2018,"2018.049315068493150684","Coral Trout",8.356494365266688,5.152285421208509,12.673597517515669,"LTMP",9,"_"," ",8.490188822955695,"restricted","9.0m"
+"fish","reef","Small Lagoon Reef",2020,"2020.052054794520547946","Coral Trout",11.242970501772213,7.866911493782161,16.38861258358906,"LTMP",9,"_"," ",11.510348821444994,"restricted","9.0m"

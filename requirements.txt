@@ -1,0 +1,24 @@
+# CEE project requirements
+# Python >= 3.10
+
+# Core data science
+pandas>=1.5
+numpy>=1.23
+scipy>=1.9
+
+# Statistical modelling
+statsmodels>=0.14
+pygam>=0.8
+
+# Bayesian modelling
+pymc>=5.0
+arviz>=0.16
+nutpie
+
+# Visualisation
+matplotlib>=3.6
+seaborn>=0.12
+cartopy>=0.21
+
+# Standard-library modules used by the project:
+# os, re, glob, math, time, urllib, subprocess, pathlib

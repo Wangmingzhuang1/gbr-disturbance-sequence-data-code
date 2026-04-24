@@ -1,0 +1,8 @@
+a_sector,nrm_region,domain_name,year,survey_date,variable,tows,cots,cotsptow
+"CG","Cape York","Reef 11-162",2020,"2019.9041095890410958","COTS",29,0,"0.00"
+"CG","Cape York","Reef 11-162",2021,"2020.9287671232876712","COTS",35,0,"0.00"
+"CG","Cape York","Reef 11-162",2022,"2021.7890410958904109","COTS",31,2,"0.06"
+"CG","Cape York","Reef 11-162",2023,"2022.9315068493150684","COTS",30,0,"0.00"
+"CG","Cape York","Reef 11-162",2024,"2023.8958904109589041","COTS",35,0,"0.00"
+"CG","Cape York","Reef 11-162",2025,"2024.947945205479452","COTS",31,8,"0.26"
+"CG","Cape York","Reef 11-162",2026,"2025.947945205479452","COTS",34,10,"0.29"

@@ -1,0 +1,37 @@
+sample_scope,summary_type,group_type,group_value,n_events,n_reefs,recovery_observed_n,recovered_n,failed_n,recovered_fraction
+supplement_only,stage,overall,retained,183,78,,,,
+supplement_only,stage,overall,impacted,58,49,,,,
+supplement_only,stage,overall,recovery_observed,35,32,,,,
+supplement_only,stage,overall,recovery_unobserved,23,20,,,,
+supplement_only,stage,overall,recovered,21,21,,,,
+supplement_only,stage,overall,failed,14,13,,,,
+supplement_only,fate_status,overall,non_impact,125,67,,,,
+supplement_only,fate_status,overall,recovery_unobserved,23,20,,,,
+supplement_only,fate_status,overall,failed,14,13,,,,
+supplement_only,fate_status,overall,recovered,21,21,,,,
+supplement_only,retained_by_group,baseline_hc_group,High baseline HC,86,55,,,,
+supplement_only,impacted_by_group,baseline_hc_group,High baseline HC,41,38,24.0,13.0,11.0,0.5416666666666666
+supplement_only,retained_by_group,baseline_hc_group,Low baseline HC,97,57,,,,
+supplement_only,impacted_by_group,baseline_hc_group,Low baseline HC,17,17,11.0,8.0,3.0,0.7272727272727273
+supplement_only,retained_by_group,disturbance_group,Heat-linked,129,78,,,,
+supplement_only,impacted_by_group,disturbance_group,Heat-linked,37,33,15.0,11.0,4.0,0.7333333333333333
+supplement_only,retained_by_group,disturbance_group,Storm-linked,54,43,,,,
+supplement_only,impacted_by_group,disturbance_group,Storm-linked,21,21,20.0,10.0,10.0,0.5
+strict_plus_supplement,stage,overall,retained,301,85,,,,
+strict_plus_supplement,stage,overall,impacted,123,64,,,,
+strict_plus_supplement,stage,overall,recovery_observed,80,46,,,,
+strict_plus_supplement,stage,overall,recovery_unobserved,43,30,,,,
+strict_plus_supplement,stage,overall,recovered,46,34,,,,
+strict_plus_supplement,stage,overall,failed,34,22,,,,
+strict_plus_supplement,fate_status,overall,non_impact,178,75,,,,
+strict_plus_supplement,fate_status,overall,recovery_unobserved,43,30,,,,
+strict_plus_supplement,fate_status,overall,failed,34,22,,,,
+strict_plus_supplement,fate_status,overall,recovered,46,34,,,,
+strict_plus_supplement,retained_by_group,baseline_hc_group,High baseline HC,144,66,,,,
+strict_plus_supplement,impacted_by_group,baseline_hc_group,High baseline HC,86,53,53.0,27.0,26.0,0.5094339622641509
+strict_plus_supplement,retained_by_group,baseline_hc_group,Low baseline HC,157,67,,,,
+strict_plus_supplement,impacted_by_group,baseline_hc_group,Low baseline HC,37,29,27.0,19.0,8.0,0.7037037037037037
+strict_plus_supplement,retained_by_group,disturbance_group,Heat-linked,176,85,,,,
+strict_plus_supplement,impacted_by_group,disturbance_group,Heat-linked,66,45,24.0,17.0,7.0,0.7083333333333334
+strict_plus_supplement,retained_by_group,disturbance_group,Storm-linked,125,62,,,,
+strict_plus_supplement,impacted_by_group,disturbance_group,Storm-linked,57,38,56.0,29.0,27.0,0.5178571428571429

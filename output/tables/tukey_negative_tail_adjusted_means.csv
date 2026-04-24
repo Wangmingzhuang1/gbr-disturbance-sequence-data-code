@@ -1,0 +1,6 @@
+model_name,response,reference_category,seq_category,adjusted_mean,ci_lo,ci_hi,n_events
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,H_to_H,0.3400814870059598,-0.1256566041525791,0.8004373785529053,30
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,Isolated_Heatwave,0.6772433822746509,0.3147739725506904,1.0361186125849358,9
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,Isolated_Storm,0.2783025873506387,0.02832162561599667,0.528558894220159,40
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,S_to_H,0.37599173715379564,0.22494359330736843,0.5254395945589843,10
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,S_to_S,0.021528480485551102,-0.47269441245645694,0.48455151671616686,17

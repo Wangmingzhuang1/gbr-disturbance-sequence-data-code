@@ -1,0 +1,295 @@
+scenario_group,scenario_name,metric_group,metric_name,seq_category,value,ci_lo,ci_hi
+rule,primary_first_event,sample,retained_sequences,,118.0,,
+rule,primary_first_event,sample,retained_reefs,,66.0,,
+rule,primary_first_event,hierarchy,count,Isolated_Storm,42.0,,
+rule,primary_first_event,hierarchy,mean_rel_loss,Isolated_Storm,0.11413404792011733,,
+rule,primary_first_event,hierarchy,rank,Isolated_Storm,4.0,,
+rule,primary_first_event,hierarchy,count,Isolated_Heatwave,13.0,,
+rule,primary_first_event,hierarchy,mean_rel_loss,Isolated_Heatwave,-0.04923946421805777,,
+rule,primary_first_event,hierarchy,rank,Isolated_Heatwave,5.0,,
+rule,primary_first_event,hierarchy,count,Concurrent,,,
+rule,primary_first_event,hierarchy,mean_rel_loss,Concurrent,,,
+rule,primary_first_event,hierarchy,rank,Concurrent,,,
+rule,primary_first_event,hierarchy,count,S_to_H,10.0,,
+rule,primary_first_event,hierarchy,mean_rel_loss,S_to_H,0.4322444615911073,,
+rule,primary_first_event,hierarchy,rank,S_to_H,1.0,,
+rule,primary_first_event,hierarchy,count,S_to_S,19.0,,
+rule,primary_first_event,hierarchy,mean_rel_loss,S_to_S,0.25020731794037393,,
+rule,primary_first_event,hierarchy,rank,S_to_S,2.0,,
+rule,primary_first_event,hierarchy,count,H_to_H,34.0,,
+rule,primary_first_event,hierarchy,mean_rel_loss,H_to_H,0.18605116029059215,,
+rule,primary_first_event,hierarchy,rank,H_to_H,3.0,,
+rule,primary_first_event,hierarchy,count,H_to_S,,,
+rule,primary_first_event,hierarchy,mean_rel_loss,H_to_S,,,
+rule,primary_first_event,hierarchy,rank,H_to_S,,,
+rule,primary_first_event,contrast,S_to_H_minus_Isolated_Heatwave,,0.48148392580916505,,
+rule,primary_first_event,contrast,S_to_H_minus_H_to_H,,0.24619330130051514,,
+rule,primary_first_event,model_status,model_ran,,1.0,,
+rule,primary_first_event,sample,model_events,,118.0,,
+rule,primary_first_event,sample,model_reefs,,66.0,,
+rule,primary_first_event,model_status,reference_category,Isolated_Heatwave,,,
+rule,primary_first_event,adjusted_mean,adjusted_mean,H_to_H,-0.005323548361289156,-0.47246611566834634,0.47973528378534785
+rule,primary_first_event,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.4467325151734579,-0.03279565437541498,0.914947994485223
+rule,primary_first_event,adjusted_mean,adjusted_mean,Isolated_Storm,0.32183053039254667,0.04157258423919401,0.6095631199540013
+rule,primary_first_event,adjusted_mean,adjusted_mean,S_to_H,0.32787955278660136,0.12643193449661624,0.5195604696576295
+rule,primary_first_event,adjusted_mean,adjusted_mean,S_to_S,-0.15087156699240026,-0.6602096390704234,0.3748239397024019
+rule,primary_first_event,model_coef,storm_exposure_seq_c,,0.014061839472835751,0.002344354807828273,0.02577932413784323
+rule,primary_first_event,model_coef,heat_exposure_seq_c,,0.06613713042088677,0.023031375371040913,0.10924288547073263
+rule,primary_first_event,model_coef,baseline_hc_c,,0.021230536799785805,0.014660703335059047,0.027800370264512562
+rule,primary_first_event,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.45205606353474714,-0.9512161054148158,0.04710397834532154
+rule,primary_first_event,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,-0.12490198478091147,-0.7556059292180535,0.5058019596562304
+rule,primary_first_event,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.11885296238685665,-0.7029253312671543,0.465219406493441
+rule,primary_first_event,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.5976040821658583,-1.5125922766772475,0.3173841123455311
+rule,storm_priority,sample,retained_sequences,,118.0,,
+rule,storm_priority,sample,retained_reefs,,66.0,,
+rule,storm_priority,hierarchy,count,Isolated_Storm,42.0,,
+rule,storm_priority,hierarchy,mean_rel_loss,Isolated_Storm,0.11413404792011733,,
+rule,storm_priority,hierarchy,rank,Isolated_Storm,4.0,,
+rule,storm_priority,hierarchy,count,Isolated_Heatwave,13.0,,
+rule,storm_priority,hierarchy,mean_rel_loss,Isolated_Heatwave,-0.04923946421805777,,
+rule,storm_priority,hierarchy,rank,Isolated_Heatwave,5.0,,
+rule,storm_priority,hierarchy,count,Concurrent,,,
+rule,storm_priority,hierarchy,mean_rel_loss,Concurrent,,,
+rule,storm_priority,hierarchy,rank,Concurrent,,,
+rule,storm_priority,hierarchy,count,S_to_H,14.0,,
+rule,storm_priority,hierarchy,mean_rel_loss,S_to_H,0.5276970861584314,,
+rule,storm_priority,hierarchy,rank,S_to_H,1.0,,
+rule,storm_priority,hierarchy,count,S_to_S,15.0,,
+rule,storm_priority,hierarchy,mean_rel_loss,S_to_S,0.11782331747583304,,
+rule,storm_priority,hierarchy,rank,S_to_S,3.0,,
+rule,storm_priority,hierarchy,count,H_to_H,34.0,,
+rule,storm_priority,hierarchy,mean_rel_loss,H_to_H,0.18605116029059215,,
+rule,storm_priority,hierarchy,rank,H_to_H,2.0,,
+rule,storm_priority,hierarchy,count,H_to_S,,,
+rule,storm_priority,hierarchy,mean_rel_loss,H_to_S,,,
+rule,storm_priority,hierarchy,rank,H_to_S,,,
+rule,storm_priority,contrast,S_to_H_minus_Isolated_Heatwave,,0.5769365503764892,,
+rule,storm_priority,contrast,S_to_H_minus_H_to_H,,0.3416459258678392,,
+rule,storm_priority,model_status,model_ran,,1.0,,
+rule,storm_priority,sample,model_events,,118.0,,
+rule,storm_priority,sample,model_reefs,,66.0,,
+rule,storm_priority,model_status,reference_category,Isolated_Heatwave,,,
+rule,storm_priority,adjusted_mean,adjusted_mean,H_to_H,-0.1550283625735545,-0.5995765838912057,0.30828655367854335
+rule,storm_priority,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.29587743680424955,-0.17701733214604895,0.7566959300041819
+rule,storm_priority,adjusted_mean,adjusted_mean,Isolated_Storm,0.38292488499073957,0.0966924994917388,0.679003087595912
+rule,storm_priority,adjusted_mean,adjusted_mean,S_to_H,0.3760494910058817,0.15627067845057963,0.5895303679344253
+rule,storm_priority,adjusted_mean,adjusted_mean,S_to_S,-0.019240999906796785,-0.520619423545931,0.4852212201512576
+rule,storm_priority,model_coef,storm_exposure_seq_c,,0.007621647762501318,-0.0037366458299549956,0.018979941354957633
+rule,storm_priority,model_coef,heat_exposure_seq_c,,0.06971559122366654,0.03159207229777462,0.10783911014955845
+rule,storm_priority,model_coef,baseline_hc_c,,0.019479435387626223,0.013128616857204997,0.025830253918047448
+rule,storm_priority,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.450905799377804,-0.9309839695557849,0.029172370800176817
+rule,storm_priority,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,0.08704744818649006,-0.5476979967706767,0.7217928931436567
+rule,storm_priority,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,0.08017205420163212,-0.5231383205117655,0.6834824289150296
+rule,storm_priority,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.3151184367110463,-1.1935570497493007,0.563320176327208
+window,window_1_3,sample,retained_sequences,,118.0,,
+window,window_1_3,sample,retained_reefs,,66.0,,
+window,window_1_3,hierarchy,count,Isolated_Storm,47.0,,
+window,window_1_3,hierarchy,mean_rel_loss,Isolated_Storm,0.0552834695778813,,
+window,window_1_3,hierarchy,rank,Isolated_Storm,4.0,,
+window,window_1_3,hierarchy,count,Isolated_Heatwave,28.0,,
+window,window_1_3,hierarchy,mean_rel_loss,Isolated_Heatwave,0.12405729371477411,,
+window,window_1_3,hierarchy,rank,Isolated_Heatwave,3.0,,
+window,window_1_3,hierarchy,count,Concurrent,,,
+window,window_1_3,hierarchy,mean_rel_loss,Concurrent,,,
+window,window_1_3,hierarchy,rank,Concurrent,,,
+window,window_1_3,hierarchy,count,S_to_H,9.0,,
+window,window_1_3,hierarchy,mean_rel_loss,S_to_H,0.451436597323808,,
+window,window_1_3,hierarchy,rank,S_to_H,2.0,,
+window,window_1_3,hierarchy,count,S_to_S,15.0,,
+window,window_1_3,hierarchy,mean_rel_loss,S_to_S,0.46482626631264,,
+window,window_1_3,hierarchy,rank,S_to_S,1.0,,
+window,window_1_3,hierarchy,count,H_to_H,19.0,,
+window,window_1_3,hierarchy,mean_rel_loss,H_to_H,0.0020387382216323345,,
+window,window_1_3,hierarchy,rank,H_to_H,5.0,,
+window,window_1_3,hierarchy,count,H_to_S,,,
+window,window_1_3,hierarchy,mean_rel_loss,H_to_S,,,
+window,window_1_3,hierarchy,rank,H_to_S,,,
+window,window_1_3,contrast,S_to_H_minus_Isolated_Heatwave,,0.3273793036090339,,
+window,window_1_3,contrast,S_to_H_minus_H_to_H,,0.44939785910217567,,
+window,window_1_3,model_status,model_ran,,1.0,,
+window,window_1_3,sample,model_events,,118.0,,
+window,window_1_3,sample,model_reefs,,66.0,,
+window,window_1_3,model_status,reference_category,Isolated_Heatwave,,,
+window,window_1_3,adjusted_mean,adjusted_mean,H_to_H,-0.15535161369758274,-0.6950973114889114,0.38060069209732483
+window,window_1_3,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.38108930899161225,-0.11377356409506251,0.8688622543728333
+window,window_1_3,adjusted_mean,adjusted_mean,Isolated_Storm,0.18434289947132665,-0.08235799814246045,0.45220430126466754
+window,window_1_3,adjusted_mean,adjusted_mean,S_to_H,0.2817704037409725,0.045840285005374334,0.5201560926771716
+window,window_1_3,adjusted_mean,adjusted_mean,S_to_S,-0.11819221395621284,-0.6949552669453115,0.4554005372976578
+window,window_1_3,model_coef,storm_exposure_seq_c,,0.012291629679983502,-0.0007713083371370128,0.025354567697104015
+window,window_1_3,model_coef,heat_exposure_seq_c,,0.06319124887147812,0.013428195161929175,0.11295430258102707
+window,window_1_3,model_coef,baseline_hc_c,,0.020466318571144244,0.012834512918411648,0.02809812422387684
+window,window_1_3,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.536440922689195,-1.06105440534359,-0.011827440034799963
+window,window_1_3,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,-0.19674640952028566,-0.8872768676023824,0.49378404856181113
+window,window_1_3,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.09931890525063967,-0.7397037015059862,0.5410658910047068
+window,window_1_3,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.4992815229478251,-1.5330024437687588,0.5344393978731086
+window,window_1_4,sample,retained_sequences,,118.0,,
+window,window_1_4,sample,retained_reefs,,66.0,,
+window,window_1_4,hierarchy,count,Isolated_Storm,42.0,,
+window,window_1_4,hierarchy,mean_rel_loss,Isolated_Storm,0.11413404792011733,,
+window,window_1_4,hierarchy,rank,Isolated_Storm,4.0,,
+window,window_1_4,hierarchy,count,Isolated_Heatwave,13.0,,
+window,window_1_4,hierarchy,mean_rel_loss,Isolated_Heatwave,-0.04923946421805777,,
+window,window_1_4,hierarchy,rank,Isolated_Heatwave,5.0,,
+window,window_1_4,hierarchy,count,Concurrent,,,
+window,window_1_4,hierarchy,mean_rel_loss,Concurrent,,,
+window,window_1_4,hierarchy,rank,Concurrent,,,
+window,window_1_4,hierarchy,count,S_to_H,10.0,,
+window,window_1_4,hierarchy,mean_rel_loss,S_to_H,0.4322444615911073,,
+window,window_1_4,hierarchy,rank,S_to_H,1.0,,
+window,window_1_4,hierarchy,count,S_to_S,19.0,,
+window,window_1_4,hierarchy,mean_rel_loss,S_to_S,0.25020731794037393,,
+window,window_1_4,hierarchy,rank,S_to_S,2.0,,
+window,window_1_4,hierarchy,count,H_to_H,34.0,,
+window,window_1_4,hierarchy,mean_rel_loss,H_to_H,0.18605116029059215,,
+window,window_1_4,hierarchy,rank,H_to_H,3.0,,
+window,window_1_4,hierarchy,count,H_to_S,,,
+window,window_1_4,hierarchy,mean_rel_loss,H_to_S,,,
+window,window_1_4,hierarchy,rank,H_to_S,,,
+window,window_1_4,contrast,S_to_H_minus_Isolated_Heatwave,,0.48148392580916505,,
+window,window_1_4,contrast,S_to_H_minus_H_to_H,,0.24619330130051514,,
+window,window_1_4,model_status,model_ran,,1.0,,
+window,window_1_4,sample,model_events,,118.0,,
+window,window_1_4,sample,model_reefs,,66.0,,
+window,window_1_4,model_status,reference_category,Isolated_Heatwave,,,
+window,window_1_4,adjusted_mean,adjusted_mean,H_to_H,-0.005323548361289156,-0.47246611566834634,0.47973528378534785
+window,window_1_4,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.4467325151734579,-0.03279565437541498,0.914947994485223
+window,window_1_4,adjusted_mean,adjusted_mean,Isolated_Storm,0.32183053039254667,0.04157258423919401,0.6095631199540013
+window,window_1_4,adjusted_mean,adjusted_mean,S_to_H,0.32787955278660136,0.12643193449661624,0.5195604696576295
+window,window_1_4,adjusted_mean,adjusted_mean,S_to_S,-0.15087156699240026,-0.6602096390704234,0.3748239397024019
+window,window_1_4,model_coef,storm_exposure_seq_c,,0.014061839472835751,0.002344354807828273,0.02577932413784323
+window,window_1_4,model_coef,heat_exposure_seq_c,,0.06613713042088677,0.023031375371040913,0.10924288547073263
+window,window_1_4,model_coef,baseline_hc_c,,0.021230536799785805,0.014660703335059047,0.027800370264512562
+window,window_1_4,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.45205606353474714,-0.9512161054148158,0.04710397834532154
+window,window_1_4,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,-0.12490198478091147,-0.7556059292180535,0.5058019596562304
+window,window_1_4,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.11885296238685665,-0.7029253312671543,0.465219406493441
+window,window_1_4,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.5976040821658583,-1.5125922766772475,0.3173841123455311
+window,window_1_5,sample,retained_sequences,,118.0,,
+window,window_1_5,sample,retained_reefs,,66.0,,
+window,window_1_5,hierarchy,count,Isolated_Storm,33.0,,
+window,window_1_5,hierarchy,mean_rel_loss,Isolated_Storm,0.16401674823155857,,
+window,window_1_5,hierarchy,rank,Isolated_Storm,3.0,,
+window,window_1_5,hierarchy,count,Isolated_Heatwave,8.0,,
+window,window_1_5,hierarchy,mean_rel_loss,Isolated_Heatwave,-0.09351424809806487,,
+window,window_1_5,hierarchy,rank,Isolated_Heatwave,5.0,,
+window,window_1_5,hierarchy,count,Concurrent,,,
+window,window_1_5,hierarchy,mean_rel_loss,Concurrent,,,
+window,window_1_5,hierarchy,rank,Concurrent,,,
+window,window_1_5,hierarchy,count,S_to_H,17.0,,
+window,window_1_5,hierarchy,mean_rel_loss,S_to_H,0.22566234461294582,,
+window,window_1_5,hierarchy,rank,S_to_H,1.0,,
+window,window_1_5,hierarchy,count,S_to_S,21.0,,
+window,window_1_5,hierarchy,mean_rel_loss,S_to_S,0.19790481631184276,,
+window,window_1_5,hierarchy,rank,S_to_S,2.0,,
+window,window_1_5,hierarchy,count,H_to_H,39.0,,
+window,window_1_5,hierarchy,mean_rel_loss,H_to_H,0.1257638585665352,,
+window,window_1_5,hierarchy,rank,H_to_H,4.0,,
+window,window_1_5,hierarchy,count,H_to_S,,,
+window,window_1_5,hierarchy,mean_rel_loss,H_to_S,,,
+window,window_1_5,hierarchy,rank,H_to_S,,,
+window,window_1_5,contrast,S_to_H_minus_Isolated_Heatwave,,0.3191765927110107,,
+window,window_1_5,contrast,S_to_H_minus_H_to_H,,0.0998984860464106,,
+window,window_1_5,model_status,model_ran,,1.0,,
+window,window_1_5,sample,model_events,,118.0,,
+window,window_1_5,sample,model_reefs,,66.0,,
+window,window_1_5,model_status,reference_category,Isolated_Heatwave,,,
+window,window_1_5,adjusted_mean,adjusted_mean,H_to_H,-0.030709029144887365,-0.4935751797133339,0.42522820096301334
+window,window_1_5,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.27406072988106683,-0.2997211302887995,0.8443240777865976
+window,window_1_5,adjusted_mean,adjusted_mean,Isolated_Storm,0.41500127944062803,0.15155020392119992,0.6844120971355352
+window,window_1_5,adjusted_mean,adjusted_mean,S_to_H,0.17922864624093637,-0.06365517111438453,0.4175112077825052
+window,window_1_5,adjusted_mean,adjusted_mean,S_to_S,-0.008346319910191026,-0.5713261510472744,0.5453719115850127
+window,window_1_5,model_coef,storm_exposure_seq_c,,0.010755888824362268,-0.0030750726193479426,0.024586850268072478
+window,window_1_5,model_coef,heat_exposure_seq_c,,0.06269645518359095,0.02371022578114043,0.10168268458604146
+window,window_1_5,model_coef,baseline_hc_c,,0.02444889371217439,0.017297989364451163,0.03159979805989762
+window,window_1_5,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.3047697590259542,-0.7775986470664134,0.16805912901450493
+window,window_1_5,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,0.1409405495595612,-0.5787376345983213,0.8606187337174438
+window,window_1_5,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.09483208364013046,-0.816009453154044,0.6263452858737832
+window,window_1_5,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.28240704979125786,-1.356418853109561,0.7916047535270452
+baseline_threshold,baseline_hc_10pct,sample,retained_sequences,,102.0,,
+baseline_threshold,baseline_hc_10pct,sample,retained_reefs,,61.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,Isolated_Storm,38.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,Isolated_Storm,0.12954838007019615,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,Isolated_Storm,5.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,Isolated_Heatwave,10.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,Isolated_Heatwave,0.14690892040430104,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,Isolated_Heatwave,4.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,Concurrent,,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,Concurrent,,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,Concurrent,,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,S_to_H,9.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,S_to_H,0.409884728325548,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,S_to_H,2.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,S_to_S,16.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,S_to_S,0.46220183397491843,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,S_to_S,1.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,H_to_H,29.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,H_to_H,0.367592120516101,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,H_to_H,3.0,,
+baseline_threshold,baseline_hc_10pct,hierarchy,count,H_to_S,,,
+baseline_threshold,baseline_hc_10pct,hierarchy,mean_rel_loss,H_to_S,,,
+baseline_threshold,baseline_hc_10pct,hierarchy,rank,H_to_S,,,
+baseline_threshold,baseline_hc_10pct,contrast,S_to_H_minus_Isolated_Heatwave,,0.262975807921247,,
+baseline_threshold,baseline_hc_10pct,contrast,S_to_H_minus_H_to_H,,0.04229260780944699,,
+baseline_threshold,baseline_hc_10pct,model_status,model_ran,,1.0,,
+baseline_threshold,baseline_hc_10pct,sample,model_events,,102.0,,
+baseline_threshold,baseline_hc_10pct,sample,model_reefs,,61.0,,
+baseline_threshold,baseline_hc_10pct,model_status,reference_category,Isolated_Heatwave,,,
+baseline_threshold,baseline_hc_10pct,adjusted_mean,adjusted_mean,H_to_H,0.12399557150308162,-0.3974595812141141,0.6367050071287035
+baseline_threshold,baseline_hc_10pct,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.465574754043005,0.015252717236537393,0.9162329646449494
+baseline_threshold,baseline_hc_10pct,adjusted_mean,adjusted_mean,Isolated_Storm,0.34469629705705684,0.06550730615172529,0.6185035139799457
+baseline_threshold,baseline_hc_10pct,adjusted_mean,adjusted_mean,S_to_H,0.34814751108122066,0.19259574046651318,0.5093485007478628
+baseline_threshold,baseline_hc_10pct,adjusted_mean,adjusted_mean,S_to_S,0.2283053148929659,-0.2298854839065418,0.6691767181658878
+baseline_threshold,baseline_hc_10pct,model_coef,storm_exposure_seq_c,,0.008425882092725904,-0.0023433526748363256,0.019195116860288134
+baseline_threshold,baseline_hc_10pct,model_coef,heat_exposure_seq_c,,0.05589162896508156,0.01015843492466096,0.10162482300550216
+baseline_threshold,baseline_hc_10pct,model_coef,baseline_hc_c,,0.014770596391348936,0.006801195535919482,0.02273999724677839
+baseline_threshold,baseline_hc_10pct,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.3415791825399234,-0.8493068121332972,0.1661484470534504
+baseline_threshold,baseline_hc_10pct,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,-0.12087845698594814,-0.7167831766459587,0.47502626267406245
+baseline_threshold,baseline_hc_10pct,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.11742724296178439,-0.6543244414519183,0.4194699555283494
+baseline_threshold,baseline_hc_10pct,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.23726943915003917,-1.0582798196088783,0.5837409413088
+reference_category,reference_Isolated_Heatwave,model_status,model_ran,,1.0,,
+reference_category,reference_Isolated_Heatwave,sample,model_events,,118.0,,
+reference_category,reference_Isolated_Heatwave,sample,model_reefs,,66.0,,
+reference_category,reference_Isolated_Heatwave,model_status,reference_category,Isolated_Heatwave,,,
+reference_category,reference_Isolated_Heatwave,adjusted_mean,adjusted_mean,H_to_H,-0.005323548361289156,-0.47246611566834634,0.47973528378534785
+reference_category,reference_Isolated_Heatwave,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.4467325151734579,-0.03279565437541498,0.914947994485223
+reference_category,reference_Isolated_Heatwave,adjusted_mean,adjusted_mean,Isolated_Storm,0.32183053039254667,0.04157258423919401,0.6095631199540013
+reference_category,reference_Isolated_Heatwave,adjusted_mean,adjusted_mean,S_to_H,0.32787955278660136,0.12643193449661624,0.5195604696576295
+reference_category,reference_Isolated_Heatwave,adjusted_mean,adjusted_mean,S_to_S,-0.15087156699240026,-0.6602096390704234,0.3748239397024019
+reference_category,reference_Isolated_Heatwave,model_coef,storm_exposure_seq_c,,0.014061839472835751,0.002344354807828273,0.02577932413784323
+reference_category,reference_Isolated_Heatwave,model_coef,heat_exposure_seq_c,,0.06613713042088677,0.023031375371040913,0.10924288547073263
+reference_category,reference_Isolated_Heatwave,model_coef,baseline_hc_c,,0.021230536799785805,0.014660703335059047,0.027800370264512562
+reference_category,reference_Isolated_Heatwave,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",,-0.45205606353474714,-0.9512161054148158,0.04710397834532154
+reference_category,reference_Isolated_Heatwave,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",,-0.12490198478091147,-0.7556059292180535,0.5058019596562304
+reference_category,reference_Isolated_Heatwave,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",,-0.11885296238685665,-0.7029253312671543,0.465219406493441
+reference_category,reference_Isolated_Heatwave,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",,-0.5976040821658583,-1.5125922766772475,0.3173841123455311
+reference_category,reference_Isolated_Storm,model_status,model_ran,,1.0,,
+reference_category,reference_Isolated_Storm,sample,model_events,,118.0,,
+reference_category,reference_Isolated_Storm,sample,model_reefs,,66.0,,
+reference_category,reference_Isolated_Storm,model_status,reference_category,Isolated_Storm,,,
+reference_category,reference_Isolated_Storm,adjusted_mean,adjusted_mean,H_to_H,-0.005323548361289065,-0.49105098640306133,0.46698635455976883
+reference_category,reference_Isolated_Storm,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.44673251517345514,-0.04541014031304745,0.9356253539336841
+reference_category,reference_Isolated_Storm,adjusted_mean,adjusted_mean,Isolated_Storm,0.3218305303925435,0.029354283093659384,0.6115216365406273
+reference_category,reference_Isolated_Storm,adjusted_mean,adjusted_mean,S_to_H,0.32787955278660086,0.14240177546470112,0.52411973163531
+reference_category,reference_Isolated_Storm,adjusted_mean,adjusted_mean,S_to_S,-0.15087156699239276,-0.6534745236435969,0.35479880319222384
+reference_category,reference_Isolated_Storm,model_coef,storm_exposure_seq_c,,0.014061839472835515,0.0023443548078284585,0.02577932413784257
+reference_category,reference_Isolated_Storm,model_coef,heat_exposure_seq_c,,0.06613713042088658,0.023031375371040892,0.10924288547073227
+reference_category,reference_Isolated_Storm,model_coef,baseline_hc_c,,0.021230536799785656,0.014660703335058915,0.027800370264512396
+reference_category,reference_Isolated_Storm,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Storm'))[T.H_to_H]",,-0.32715407875383257,-1.055219517060333,0.4009113595526678
+reference_category,reference_Isolated_Storm,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Storm'))[T.Isolated_Heatwave]",,0.12490198478091168,-0.5058019596562335,0.7556059292180568
+reference_category,reference_Isolated_Storm,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Storm'))[T.S_to_H]",,0.006049022394057392,-0.33665168597748435,0.3487497307655992
+reference_category,reference_Isolated_Storm,sequence_coef,"C(seq_category_model, Treatment(reference='Isolated_Storm'))[T.S_to_S]",,-0.4727020973849363,-0.910566394990189,-0.034837799779683654
+reference_category,reference_H_to_H,model_status,model_ran,,1.0,,
+reference_category,reference_H_to_H,sample,model_events,,118.0,,
+reference_category,reference_H_to_H,sample,model_reefs,,66.0,,
+reference_category,reference_H_to_H,model_status,reference_category,H_to_H,,,
+reference_category,reference_H_to_H,adjusted_mean,adjusted_mean,H_to_H,-0.005323548361294555,-0.4714941248645064,0.4575814681075829
+reference_category,reference_H_to_H,adjusted_mean,adjusted_mean,Isolated_Heatwave,0.4467325151734561,-0.037557502560666894,0.9424024603989365
+reference_category,reference_H_to_H,adjusted_mean,adjusted_mean,Isolated_Storm,0.3218305303925483,0.04909256261186594,0.6103608571563091
+reference_category,reference_H_to_H,adjusted_mean,adjusted_mean,S_to_H,0.32787955278659897,0.1310739335967514,0.5300550543368533
+reference_category,reference_H_to_H,adjusted_mean,adjusted_mean,S_to_S,-0.15087156699239046,-0.6892871342163404,0.3577101626344773
+reference_category,reference_H_to_H,model_coef,storm_exposure_seq_c,,0.014061839472835558,0.002344354807828389,0.02577932413784273
+reference_category,reference_H_to_H,model_coef,heat_exposure_seq_c,,0.06613713042088673,0.02303137537104112,0.10924288547073234
+reference_category,reference_H_to_H,model_coef,baseline_hc_c,,0.02123053679978568,0.014660703335058943,0.027800370264512417
+reference_category,reference_H_to_H,sequence_coef,"C(seq_category_model, Treatment(reference='H_to_H'))[T.Isolated_Heatwave]",,0.4520560635347506,-0.047103978345321706,0.9512161054148229
+reference_category,reference_H_to_H,sequence_coef,"C(seq_category_model, Treatment(reference='H_to_H'))[T.Isolated_Storm]",,0.32715407875384284,-0.40091135955266544,1.055219517060351
+reference_category,reference_H_to_H,sequence_coef,"C(seq_category_model, Treatment(reference='H_to_H'))[T.S_to_H]",,0.33320310114789353,-0.21974471887634695,0.886150921172134
+reference_category,reference_H_to_H,sequence_coef,"C(seq_category_model, Treatment(reference='H_to_H'))[T.S_to_S]",,-0.1455480186310959,-1.0835812516019736,0.7924852143397818

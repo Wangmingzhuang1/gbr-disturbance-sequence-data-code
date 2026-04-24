@@ -1,0 +1,11 @@
+stage_code,stage_label,count,dropped,remaining
+S0,Total reef-years,2860.0,0,2860
+S1,Potential starts (event-years),604.0,0,604
+S2,Disjoint continuity filter,,64,540
+S3,Baseline not clean,,321,219
+S4,Baseline insufficient surveys,,97,122
+S5,Baseline below HC threshold,,1,121
+S6,Missing nadir response,,1,120
+S7,Label failure,,0,120
+S8,Final retained sequences,120.0,0,120
+S9,Final retained reefs,66.0,0,66

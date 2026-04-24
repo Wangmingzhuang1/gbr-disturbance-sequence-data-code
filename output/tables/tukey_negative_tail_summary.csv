@@ -1,0 +1,2 @@
+sample_name,lower_fence,q1,q3,iqr,n_removed,n_retained_total,n_model_events,n_model_reefs
+tukey_negative_tail_filtered,-0.9330924955740774,-0.048743409479976824,0.5408226479160902,0.589566057396067,12,106,106,63

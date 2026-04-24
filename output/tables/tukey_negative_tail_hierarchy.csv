@@ -1,0 +1,6 @@
+seq_category_main,n_events,mean_rel_loss
+S_to_H,10,0.4322444615911073
+S_to_S,17,0.39729053181571206
+Isolated_Heatwave,9,0.37332077390724994
+H_to_H,30,0.34419131499600447
+Isolated_Storm,40,0.16984075031612317

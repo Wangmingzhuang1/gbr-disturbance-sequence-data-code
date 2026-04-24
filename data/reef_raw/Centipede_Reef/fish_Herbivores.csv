@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Centipede Reef",2006,"2006.7342465753424657","Herbivores",44.13048751587198,38.85496144851021,50.333298166963274,"LTMP",9,"_"," ",44.310639582708745,"restricted","9.0m"
+"fish","reef","Centipede Reef",2008,"2008.3835616438356164","Herbivores",35.173591037056354,30.371912366777252,39.90235887309559,"LTMP",9,"_"," ",35.22713235543879,"restricted","9.0m"
+"fish","reef","Centipede Reef",2010,"2010.2219178082191781","Herbivores",55.667254871597294,48.839595220664634,62.2288965794218,"LTMP",9,"_"," ",55.63594985387514,"restricted","9.0m"
+"fish","reef","Centipede Reef",2012,"2012.32054794520547947","Herbivores",66.62413508131894,58.69283757515378,74.98559236366391,"LTMP",9,"_"," ",66.73598210979377,"restricted","9.0m"
+"fish","reef","Centipede Reef",2016,"2016.3780821917808219","Herbivores",55.32907130204377,48.844870478915865,62.512625886209904,"LTMP",9,"_"," ",55.42262281857158,"restricted","9.0m"
+"fish","reef","Centipede Reef",2018,"2018.3287671232876712","Herbivores",56.82752226844946,49.80509480341379,64.60537657132207,"LTMP",9,"_"," ",56.800614698694716,"restricted","9.0m"
+"fish","reef","Centipede Reef",2020,"2020.4410958904109589","Herbivores",45.21067755792611,40.141670495271775,52.02708952292777,"LTMP",9,"_"," ",45.33496086089584,"restricted","9.0m"

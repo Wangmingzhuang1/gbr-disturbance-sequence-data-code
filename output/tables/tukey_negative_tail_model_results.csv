@@ -1,0 +1,11 @@
+model_name,response,reference_category,term,Coefficient,StdErr,P-value,CI_lower,CI_upper
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,Intercept,0.6468511100976941,0.18633821352011326,0.0005177869482422804,0.2816349226547376,1.0120672975406506
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.H_to_H]",-0.33716189526869106,0.21425444766458845,0.11556797284741181,-0.7570928962188064,0.0827691056814242
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.Isolated_Storm]",-0.3989407949240122,0.25500967966212534,0.11772029961674321,-0.8987505827708742,0.10086899292284979
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_H]",-0.30125164512085517,0.22583761839984035,0.182226695841061,-0.7438852435388426,0.14138195329713216
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,"C(seq_category_model, Treatment(reference='Isolated_Heatwave'))[T.S_to_S]",-0.6557149017890997,0.3950285943190235,0.09693103764744969,-1.4299567195178695,0.11852691593967013
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,storm_exposure_seq_c,0.01157336196091553,0.005276829746307595,0.028289984357000426,0.001230965705603014,0.021915758216228046
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,heat_exposure_seq_c,0.03188375801743418,0.021671098637963983,0.1412215968586809,-0.010590814818390248,0.0743583308532586
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,baseline_hc_c,0.011403129675906457,0.0038879557644224474,0.0033577191800730683,0.0037828764041535658,0.01902338294765935
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,start_year_c,-0.0059141974322873495,0.005904833909992977,0.3165437117408135,-0.01748745923056441,0.005659064365989713
+tukey_negative_tail_filtered,rel_loss,Isolated_Heatwave,region_lat_c,0.010687515247130063,0.012660803797825044,0.39859010421266383,-0.014127204211934958,0.03550223470619508

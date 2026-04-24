@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","McCulloch Reef",2006,"2005.9123287671232877","Coral Trout",5.036861846349655,2.001263064462597,10.21528362840404,"LTMP",9,"_"," ",5.454011094928591,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2008,"2007.6684931506849315","Coral Trout",13.503488409691176,7.376984470228809,20.757047321923316,"LTMP",9,"_"," ",14.048071402563936,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2010,"2009.9095890410958904","Coral Trout",5.721691514175415,0.6516851647669669,18.186311527839145,"LTMP",9,"_"," ",7.3941743467834895,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2012,"2012.15342465753424658","Coral Trout",12.730226863278538,7.47400164501214,21.237140908335828,"LTMP",9,"_"," ",13.211707591491045,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2016,"2015.947945205479452","Coral Trout",7.371922335898029,1.0834984492877728,25.330773754385355,"LTMP",9,"_"," ",9.669902975048393,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2018,"2017.9698630136986301","Coral Trout",4.454259421009425,2.2118817385885485,7.801636403664492,"LTMP",9,"_"," ",4.728579001929538,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2020,"2020.136986301369863","Coral Trout",2.246653182847755,0.6083430102090736,5.709380369589857,"LTMP",9,"_"," ",2.5482298447076692,"restricted","9.0m"

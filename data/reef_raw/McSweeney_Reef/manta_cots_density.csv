@@ -1,0 +1,8 @@
+a_sector,nrm_region,domain_name,year,survey_date,variable,tows,cots,cotsptow
+"CG","Cape York","McSweeney Reef",2020,"2019.8931506849315068","COTS",29,4,"0.14"
+"CG","Cape York","McSweeney Reef",2021,"2020.947945205479452","COTS",24,2,"0.08"
+"CG","Cape York","McSweeney Reef",2022,"2021.7890410958904109","COTS",36,7,"0.19"
+"CG","Cape York","McSweeney Reef",2023,"2022.8958904109589041","COTS",26,0,"0.00"
+"CG","Cape York","McSweeney Reef",2024,"2023.9013698630136986","COTS",26,0,"0.00"
+"CG","Cape York","McSweeney Reef",2025,"2024.9561643835616438","COTS",24,0,"0.00"
+"CG","Cape York","McSweeney Reef",2026,"2025.9534246575342465","COTS",28,1,"0.04"

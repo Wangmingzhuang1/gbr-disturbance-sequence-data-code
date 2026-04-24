@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Centipede Reef",2006,"2006.7342465753424657","Coral Trout",7.467150745662854,4.04227534939088,12.497424807370395,"LTMP",9,"_"," ",7.715177290038125,"restricted","9.0m"
+"fish","reef","Centipede Reef",2008,"2008.3835616438356164","Coral Trout",13.689988147497816,7.253268276664268,23.718329706454334,"LTMP",9,"_"," ",14.159392924989243,"restricted","9.0m"
+"fish","reef","Centipede Reef",2010,"2010.2219178082191781","Coral Trout",10.081372159404324,6.457090521215624,15.096206516694952,"LTMP",9,"_"," ",10.288294899059998,"restricted","9.0m"
+"fish","reef","Centipede Reef",2012,"2012.32054794520547947","Coral Trout",29.294848401999488,13.765635088741266,52.440897243258114,"LTMP",9,"_"," ",30.945613090026264,"restricted","9.0m"
+"fish","reef","Centipede Reef",2016,"2016.3780821917808219","Coral Trout",8.896350046253536,4.769101401971116,15.102798883745958,"LTMP",9,"_"," ",9.238581953893076,"restricted","9.0m"
+"fish","reef","Centipede Reef",2018,"2018.3287671232876712","Coral Trout",7.837155304776246,4.098837023278874,13.157892323873906,"LTMP",9,"_"," ",8.152305552033583,"restricted","9.0m"
+"fish","reef","Centipede Reef",2020,"2020.4410958904109589","Coral Trout",8.260959090940766,4.6011958238161075,12.652105002736603,"LTMP",9,"_"," ",8.565285024444211,"restricted","9.0m"

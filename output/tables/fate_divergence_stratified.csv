@@ -1,0 +1,5 @@
+sample_scope,baseline_hc_group,disturbance_group,n_events,n_reefs,recovered_n,failed_n,recovered_fraction,mean_recovery_frac_loss,median_recovery_frac_loss
+strict,Low baseline HC,Heat-linked,6,6,3,3,0.5,0.5748813838504496,0.5529772966994558
+strict,Low baseline HC,Storm-linked,10,10,8,2,0.8,0.6849550036953068,0.8838351797932344
+strict,High baseline HC,Heat-linked,3,3,3,0,1.0,1.0983409488262812,0.9275242851624592
+strict,High baseline HC,Storm-linked,26,23,11,15,0.4230769230769231,0.41976532903395103,0.4388145856526027

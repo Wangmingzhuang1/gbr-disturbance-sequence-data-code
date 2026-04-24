@@ -1,0 +1,8 @@
+a_sector,nrm_region,domain_name,year,survey_date,variable,tows,cots,cotsptow
+"IN","Wet Tropics","Farquharson Reef",2006,"2005.9260273972602739","COTS",69,0,"0.00"
+"IN","Wet Tropics","Farquharson Reef",2008,"2008.2","COTS",63,0,"0.00"
+"IN","Wet Tropics","Farquharson Reef",2012,"2012.16712328767123288","COTS",60,0,"0.00"
+"IN","Wet Tropics","Farquharson Reef",2018,"2018.13972602739726028","COTS",67,554,"8.27"
+"IN","Wet Tropics","Farquharson Reef",2023,"2023.18356164383561643","COTS",80,0,"0.00"
+"IN","Wet Tropics","Farquharson Reef",2024,"2024.0958904109589041","COTS",77,0,"0.00"
+"IN","Wet Tropics","Farquharson Reef",2025,"2024.6465753424657534","COTS",72,1,"0.01"

@@ -1,0 +1,9 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Fore and Aft Reef",2006,"2006.5260273972602739","Herbivores",42.60642803515384,37.77124256340582,47.38825109948311,"LTMP",9,"_"," ",42.686412678289294,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2008,"2008.3589041095890411","Herbivores",37.85754162109134,33.13914103804966,42.251320040236074,"LTMP",9,"_"," ",37.92908102747155,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2010,"2010.23013698630136986","Herbivores",51.879736899424756,46.89921868171846,57.740968719986334,"LTMP",9,"_"," ",51.876769395620386,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2012,"2012.29315068493150687","Herbivores",38.4929061594245,34.43335115718332,43.37635693804739,"LTMP",9,"_"," ",38.6025514326639,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2014,"2014.32602739726027397","Herbivores",45.77632102271494,40.81440633467125,50.894814157397626,"LTMP",9,"_"," ",45.76257120700108,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2016,"2016.336986301369863","Herbivores",47.675958329449,42.00785578238062,52.86005408471069,"LTMP",9,"_"," ",47.72808646131026,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2018,"2018.29863013698630136","Herbivores",48.71455536661238,43.28732881326027,53.57569127835326,"LTMP",9,"_"," ",48.751685599500625,"restricted","9.0m"
+"fish","reef","Fore and Aft Reef",2020,"2020.4191780821917808","Herbivores",38.7141465109227,33.73518275619495,42.885226388666524,"LTMP",9,"_"," ",38.73955531676131,"restricted","9.0m"

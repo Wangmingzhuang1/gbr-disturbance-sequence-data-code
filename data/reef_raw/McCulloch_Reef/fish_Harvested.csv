@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","McCulloch Reef",2006,"2005.9123287671232877","Harvested",8.4778521682396,6.408852413889675,11.167068692425108,"LTMP",9,"_"," ",8.558368771551867,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2008,"2007.6684931506849315","Harvested",7.426762256285273,5.668228365568272,9.556455872285206,"LTMP",9,"_"," ",7.518374600066861,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2010,"2009.9095890410958904","Harvested",7.918879074777461,5.625657762496339,11.432875975408118,"LTMP",9,"_"," ",8.175951528195142,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2012,"2012.15342465753424658","Harvested",13.567327135765165,11.207907872258113,16.605606487591725,"LTMP",9,"_"," ",13.614178712062152,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2016,"2015.9452054794520548","Harvested",9.671995499107311,7.064821989599683,13.051432205461504,"LTMP",9,"_"," ",9.862757039077525,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2018,"2017.9698630136986301","Harvested",9.65390022181322,7.103947449554091,12.310859965843008,"LTMP",9,"_"," ",9.770423241378909,"restricted","9.0m"
+"fish","reef","McCulloch Reef",2020,"2020.136986301369863","Harvested",7.3239690716462,4.670059563672529,10.447122004964294,"LTMP",9,"_"," ",7.465878713796958,"restricted","9.0m"

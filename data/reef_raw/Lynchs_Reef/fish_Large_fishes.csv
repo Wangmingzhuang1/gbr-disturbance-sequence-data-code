@@ -1,0 +1,8 @@
+data_type,domain_category,domain_name,report_year,date,variable,median,lower,upper,project_code,depth,reef_zone,shelf,mean,count_group,series
+"fish","reef","Lynchs Reef",2006,"2006.7315068493150685","Large fishes",39.989172293988844,34.321631545087826,46.643033163885946,"LTMP",9,"_"," ",40.251246384515824,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2008,"2008.3726027397260274","Large fishes",50.61581017719662,43.05797471932668,58.28955730130588,"LTMP",9,"_"," ",50.7640621647195,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2010,"2010.2821917808219178","Large fishes",39.1468411890193,32.44709737825163,45.09145969406962,"LTMP",9,"_"," ",39.34883018469506,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2012,"2012.3178082191780822","Large fishes",49.598952846586215,42.3797073148025,57.33410160756844,"LTMP",9,"_"," ",49.726418610170896,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2016,"2016.3698630136986301","Large fishes",38.76079407085978,33.393336297716466,45.495434290411566,"LTMP",9,"_"," ",38.93613699675459,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2018,"2018.32602739726027397","Large fishes",37.74769029495404,32.34243860579611,44.5855788383462,"LTMP",9,"_"," ",37.96381776724704,"restricted","9.0m"
+"fish","reef","Lynchs Reef",2020,"2020.44931506849315067","Large fishes",43.7839642743456,37.38001657100829,50.29189776194654,"LTMP",9,"_"," ",43.897173052847535,"restricted","9.0m"

@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+venv/
+.venv/
+venv_gam/
+
+scripts/pipeline_log.txt
+pipeline_log.txt
+
+# Non-CSV spatial/map assets are excluded from the GitHub data-code package.
+data/Great_Barrier_Reef_Features/
+data/NRM_Terrestrial_and_Marine_Regions_GBR_GDA20/
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.qpj
+*.gpkg
+*.tif
+*.tiff
+*.zip
+
+# Generated non-CSV outputs can be recreated from the scripts.
+output/figures/
+*.pdf
+*.svg
+*.png
