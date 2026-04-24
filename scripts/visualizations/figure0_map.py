@@ -93,12 +93,21 @@ def _site_table():
     reef_best_type = {}
     if os.path.exists(seq_path):
         seq_df = filter_downstream_analysis_sample(pd.read_csv(seq_path))
+        sequence_label_map = {
+            'S -> H': 'S->H',
+            'S -> S': 'S->S',
+            'Isolated Storm': 'Isolated storm',
+            'Isolated Heatwave': 'Isolated heatwave',
+            'H -> H': 'H->H',
+            'H -> S': 'H->S',
+        }
+        seq_df['sequence_type_display'] = seq_df['sequence_type'].map(sequence_label_map).fillna(seq_df['sequence_type'])
         # Match colors and priorities
         priority_map = {name: idx for idx, name in enumerate([
-            'S -> H', 'S -> S', 'Isolated Storm', 'Isolated Heatwave', 'H -> H'
+            'S->H', 'S->S', 'Isolated storm', 'Isolated heatwave', 'H->H'
         ])}
         for reef, group in seq_df.groupby('reef_name'):
-            labels = group['sequence_type'].dropna().unique().tolist()
+            labels = group['sequence_type_display'].dropna().unique().tolist()
             if labels:
                 reef_best_type[reef] = sorted(labels, key=lambda x: priority_map.get(x, 99))[0]
 
@@ -133,22 +142,22 @@ def plot_fig0():
 
     # Premium Color Palette (Synced with global style)
     type_colors = {
-        'S -> H': SEQ_COLORS['S_to_H'],
-        'S -> S': SEQ_COLORS['S_to_S'],
-        'Isolated Storm': SEQ_COLORS['Isolated_Storm'],
-        'Isolated Heatwave': SEQ_COLORS['Isolated_Heatwave'],
-        'H -> H': SEQ_COLORS['H_to_H'],
+        'S->H': SEQ_COLORS['S_to_H'],
+        'S->S': SEQ_COLORS['S_to_S'],
+        'Isolated storm': SEQ_COLORS['Isolated_Storm'],
+        'Isolated heatwave': SEQ_COLORS['Isolated_Heatwave'],
+        'H->H': SEQ_COLORS['H_to_H'],
         'Monitoring site (No major disturbance)': '#BDC3C7',
         'Excluded due to data gaps': '#FFFFFF',
     }
     plot_sequence = [
         'Excluded due to data gaps',
         'Monitoring site (No major disturbance)',
-        'H -> H',
-        'Isolated Heatwave',
-        'Isolated Storm',
-        'S -> S',
-        'S -> H',
+        'H->H',
+        'Isolated heatwave',
+        'Isolated storm',
+        'S->S',
+        'S->H',
     ]
 
     # Vertical layout
