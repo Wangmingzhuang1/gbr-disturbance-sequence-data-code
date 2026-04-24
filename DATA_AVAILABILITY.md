@@ -41,9 +41,8 @@ The repository excludes non-CSV spatial boundary files and other large binary/ma
 
 Manuscript drafts, cover letters, and journal-preparation notes are intentionally excluded because this repository is only for data and code availability.
 
-## Repository URL and DOI
+## Repository URL
 
 Repository link:
 
 - GitHub repository: https://github.com/Wangmingzhuang1/gbr-disturbance-sequence-data-code
-- Archived release DOI: not yet assigned
