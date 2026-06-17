@@ -51,7 +51,6 @@ Outputs:
 - `output/figures/figure_04.*`
 - `output/figures/figure_05.*`
 - `output/figures/figure_06.*`
-- `output/figures/si_figure_02.*`
 
 ## 4. Reproduce map figures
 

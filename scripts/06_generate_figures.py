@@ -229,9 +229,18 @@ def figure_02(eco, legacy):
         heatwave_years=("heatwave_years_5yr", "mean"),
         heatwave_run=("max_consecutive_heatwave_5yr", "mean"),
         cumulative_dhw=("cumulative_dhw_5yr", "mean"),
+        storm_years=("storm_years_5yr", "mean"),
+        storm_run=("max_consecutive_storm_5yr", "mean"),
     )
+    mixed = legacy.assign(
+        mixed_history_5yr=(
+            legacy["heatwave_years_5yr"].gt(0) & legacy["storm_years_5yr"].gt(0)
+        ).astype(float)
+    )
+    annual["mixed_frequency"] = mixed.groupby("event_year")["mixed_history_5yr"].mean() * 100
 
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.35))
+    fig, axes = plt.subplots(2, 3, figsize=(7.1, 4.55))
+    axes = axes.ravel()
 
     axes[0].plot(yearly.index, yearly["heatwave_pct"], color=THERMAL, lw=1.6, label="Heatwave")
     axes[0].plot(yearly.index, yearly["storm_pct"], color=STORM, lw=1.2, label="Storm")
@@ -253,45 +262,27 @@ def figure_02(eco, legacy):
     axes[2].set_ylabel("Mean maximum consecutive\nheatwave years")
     panel_label(axes[2], "c")
 
-    fig.tight_layout(w_pad=1.7)
+    axes[3].plot(annual.index, annual["storm_years"], color=STORM, lw=1.6)
+    axes[3].scatter(annual.index, annual["storm_years"], s=10, color=STORM, alpha=0.65)
+    axes[3].set_xlabel("Target year")
+    axes[3].set_ylabel("Mean storm years\nin previous 5 years")
+    panel_label(axes[3], "d")
+
+    axes[4].plot(annual.index, annual["storm_run"], color="#7aa0c4", lw=1.6)
+    axes[4].scatter(annual.index, annual["storm_run"], s=10, color="#7aa0c4", alpha=0.7)
+    axes[4].set_xlabel("Target year")
+    axes[4].set_ylabel("Mean maximum consecutive\nstorm years")
+    panel_label(axes[4], "e")
+
+    axes[5].plot(annual.index, annual["mixed_frequency"], color=GOLD, lw=1.6)
+    axes[5].scatter(annual.index, annual["mixed_frequency"], s=10, color=GOLD, alpha=0.7)
+    axes[5].set_xlabel("Target year")
+    axes[5].set_ylabel("Mixed-history frequency (%)")
+    axes[5].set_ylim(bottom=0)
+    panel_label(axes[5], "f")
+
+    fig.tight_layout(w_pad=1.5, h_pad=1.35)
     save_figure(fig, 2)
-
-
-def si_figure_02(legacy):
-    work = legacy.copy()
-    work["mixed_history_5yr"] = (
-        work["heatwave_years_5yr"].gt(0) & work["storm_years_5yr"].gt(0)
-    ).astype(float)
-    annual = work.groupby("event_year").agg(
-        storm_years=("storm_years_5yr", "mean"),
-        storm_run=("max_consecutive_storm_5yr", "mean"),
-        mixed_frequency=("mixed_history_5yr", "mean"),
-    )
-    annual["mixed_frequency"] *= 100
-
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.35))
-
-    axes[0].plot(annual.index, annual["storm_years"], color=STORM, lw=1.6)
-    axes[0].scatter(annual.index, annual["storm_years"], s=10, color=STORM, alpha=0.65)
-    axes[0].set_xlabel("Target year")
-    axes[0].set_ylabel("Mean storm years\nin previous 5 years")
-    panel_label(axes[0], "a")
-
-    axes[1].plot(annual.index, annual["storm_run"], color="#7aa0c4", lw=1.6)
-    axes[1].scatter(annual.index, annual["storm_run"], s=10, color="#7aa0c4", alpha=0.7)
-    axes[1].set_xlabel("Target year")
-    axes[1].set_ylabel("Mean maximum consecutive\nstorm years")
-    panel_label(axes[1], "b")
-
-    axes[2].plot(annual.index, annual["mixed_frequency"], color=GOLD, lw=1.6)
-    axes[2].scatter(annual.index, annual["mixed_frequency"], s=10, color=GOLD, alpha=0.7)
-    axes[2].set_xlabel("Target year")
-    axes[2].set_ylabel("Mixed-history frequency (%)")
-    axes[2].set_ylim(bottom=0)
-    panel_label(axes[2], "c")
-
-    fig.tight_layout(w_pad=1.7)
-    save_si_figure(fig, 2)
 
 
 def figure_03(legacy):
@@ -695,8 +686,6 @@ def main():
 
     print("Generating Figure 2...")
     figure_02(eco, legacy)
-    print("Generating SI Figure 2...")
-    si_figure_02(legacy)
     print("Generating Figure 3...")
     figure_03(legacy)
     print("Generating Figure 4...")
@@ -705,7 +694,7 @@ def main():
     figure_05(legacy)
     print("Generating Figure 6...")
     figure_06()
-    print("Figures 2-6 and SI Figure 2 generated.")
+    print("Figures 2-6 generated.")
 
 
 if __name__ == "__main__":

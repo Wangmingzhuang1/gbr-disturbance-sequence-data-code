@@ -44,7 +44,7 @@ scripts\run_pipeline.bat
 
 - `scripts/04_build_legacy_load_features.py` reconstructs `output/legacy_load_analysis_matrix.csv`.
 - `scripts/05_run_lmm_legacy_model.py` reproduces the OLS, GEE, sensitivity models, VIF diagnostics and supplementary tables.
-- `scripts/06_generate_figures.py` reproduces Figures 2-6 and SI Figure 2.
+- `scripts/06_generate_figures.py` reproduces Figures 2-6.
 - `scripts/07_generate_map_figure.py` reproduces Figure 1 and SI Figure 1. Non-CSV spatial boundary files are optional and are not included here; source links are listed in `DATA_AVAILABILITY.md`.
 - `scripts/verify_contamination.py` and `scripts/verify_text_quality.py` are audit helpers used during manuscript checking.
 
