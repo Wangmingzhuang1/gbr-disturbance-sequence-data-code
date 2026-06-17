@@ -1,78 +1,76 @@
-# CEE Project
+# Reproducibility pipeline
 
-This repository now keeps a single canonical analysis pipeline for the GBR disturbance-sequence study.
+Run all commands from the repository root.
 
-## Main directories
+## 1. Build the disturbance-response matrix
 
-- `scripts/`: analysis and modeling code
-- `scripts/visualizations/`: manuscript figure scripts
-- `data/`: input datasets
-- `output/`: current generated tables and figures
-- `manuscript/`: manuscript, supplement, and cover letter
-- `docs/`: only retained reference note for event classification
+```bash
+python scripts/04_build_legacy_load_features.py
+```
 
-## Canonical pipeline
+Inputs:
 
-Run the core analysis in this order:
+- `data/eco_response_master_matrix_merged.csv`
+- `data/master_disturbance_matrix.csv`
 
-1. `scripts/02_build_matrix.py`
-2. `scripts/03_merge_eco_dist.py`
-3. `scripts/05_analyze_succession.py`
-4. `scripts/08_feature_engineering.py`
-5. `scripts/06_run_gee_model_main.py`
-6. `scripts/07_physical_cooling_proof.py`
-7. `scripts/11_spatial_autocorrelation.py`
-8. `scripts/13_bootstrap_ci.py`
-9. `scripts/12_sensitivity_analysis.py`
-10. `scripts/17_targeted_robustness.py`
-11. `scripts/18_fate_divergence.py`
-12. `scripts/14_auxiliary_ecology.py`
-13. `scripts/15_auxiliary_juveniles.py`
-14. `scripts/16_model_diagnostics.py`
-15. `scripts/19_extended_sequence_inference.py`
+Output:
 
-Summary readout:
+- `output/legacy_load_analysis_matrix.csv`
 
-- `scripts/09_analysis_combined.py`
+## 2. Reproduce model results and supplementary tables
 
-Figure generation:
+```bash
+python scripts/05_run_lmm_legacy_model.py
+```
 
-- `scripts/visualizations/figure0_map.py`
-- `scripts/visualizations/plot_fig1_hierarchy.py`
-- `scripts/visualizations/plot_fig2_adjusted_means.py`
-- `scripts/visualizations/plot_fig3_fate_divergence.py`
-- `scripts/visualizations/plot_fig4_robustness.py`
-- `scripts/visualizations/plot_fig5_supporting_evidence.py`
-- `scripts/visualizations/plot_figS1_gap_memory.py`
-- `scripts/visualizations/plot_figS2_juvenile_evidence.py`
-- `scripts/visualizations/plot_figS3_ols_diagnostics.py`
-- `scripts/visualizations/plot_figS4_baseline_state_gradients.py`
+Main outputs:
 
-## Key outputs
+- `output/tables/table_s1_variable_definitions.csv`
+- `output/tables/table_s2_sample_composition.csv`
+- `output/tables/table_s3_recurrence_model_ols_gee.csv`
+- `output/tables/table_s4_sensitivity_models.csv`
+- `output/tables/table_s5_window_sensitivity.csv`
+- `output/tables/table_s6_baseline_loss_subsets.csv`
+- `output/tables/table_s7_upper_quantile_boundary_check.csv`
+- `output/tables/table_s8_reviewer_risk_sensitivity.csv`
+- `output/tables/table_s9_ecological_sensitivity.csv`
+- `output/tables/table_s10_vif_and_sample_diagnostics.csv`
 
-- `output/data/topic_b_features.csv`
-- `output/data/eco_response_master_matrix_merged.csv`
-- `output/data/extracted_sequences.csv`
-- `output/tables/regression_results_main.csv`
-- `output/tables/adjusted_marginal_means.csv`
-- `output/tables/bootstrap_hierarchy_ci.csv`
-- `output/tables/psm_sequence_effect.csv`
-- `output/tables/permutation_sequence_effect.csv`
-- `output/tables/spatiotemporal_trend_summary.csv`
-- `output/tables/gap_memory_main_results.csv`
-- `output/tables/robustness_summary.csv`
-- `output/tables/tukey_negative_tail_*.csv`
-- `output/tables/fate_divergence_*.csv`
-- `output/tables/fate_supplement_*.csv`
-- `output/audits/pipeline_parameter_audit.csv`
-- `output/audits/sequence_consistency_audit.csv`
-- `output/audits/eco_duplicate_aggregation_audit.csv`
-- `output/audits/negative_rel_loss_audit*.csv`
-- `output/figures/fig*.png`
+This step reproduces the reef-cluster robust OLS models, GEE validation, response-metric sensitivity, fixed-effect checks, episode-level analysis, VIF diagnostics, quantile regression boundary check and ecological-covariate sensitivity analysis.
 
-## Non-canonical utility scripts
+## 3. Reproduce non-map figures
 
-These are diagnostic helpers, not part of the main pipeline:
+```bash
+python scripts/06_generate_figures.py
+```
 
-- `audit_*.py`
-- `check_*.py`
+Outputs:
+
+- `output/figures/figure_02.*`
+- `output/figures/figure_03.*`
+- `output/figures/figure_04.*`
+- `output/figures/figure_05.*`
+- `output/figures/figure_06.*`
+- `output/figures/si_figure_02.*`
+
+## 4. Reproduce map figures
+
+```bash
+python scripts/07_generate_map_figure.py
+```
+
+Outputs:
+
+- `output/figures/figure_01.*`
+- `output/figures/si_figure_01.*`
+
+Optional spatial shapefiles are not included in this repository. Source links are provided in `DATA_AVAILABILITY.md`.
+
+## 5. Optional audit helpers
+
+```bash
+python scripts/verify_contamination.py
+python scripts/verify_text_quality.py
+```
+
+These scripts were used as manuscript-audit helpers and are not required for the main reproduction workflow.

@@ -1,48 +1,56 @@
-# Data availability
+# Data availability and provenance
 
-This repository is the data-and-code availability package for the GBR disturbance-sequence study.
+This repository contains the CSV inputs, derived matrices, analysis scripts and machine-readable result tables needed to reproduce the manuscript analyses.
 
 ## Included directly
 
-All CSV data used by the analysis are included in this repository:
+The following CSV files are included because they are compact and required for reproducibility:
 
-- raw and lookup CSV files under `data/`
-- daily thermal-stress CSV files under `data/daily_climate_full/`
-- ecological raw CSV files under `data/reef_raw/`
-- derived analysis matrices under `output/data/`
-- statistical result tables under `output/tables/`
-- audit and consistency-check tables under `output/audits/`
+- `data/eco_response_master_matrix_merged.csv`
+- `data/master_disturbance_matrix.csv`
+- `data/sites_lon_lat.csv`
+- `output/legacy_load_analysis_matrix.csv`
+- `output/legacy_load_enriched_eco.csv`
+- `output/tables/table_s1_variable_definitions.csv`
+- `output/tables/table_s2_sample_composition.csv`
+- `output/tables/table_s3_recurrence_model_ols_gee.csv`
+- `output/tables/table_s4_sensitivity_models.csv`
+- `output/tables/table_s5_window_sensitivity.csv`
+- `output/tables/table_s6_baseline_loss_subsets.csv`
+- `output/tables/table_s7_upper_quantile_boundary_check.csv`
+- `output/tables/table_s8_reviewer_risk_sensitivity.csv`
+- `output/tables/table_s9_ecological_sensitivity.csv`
+- `output/tables/table_s10_vif_and_sample_diagnostics.csv`
 
-The included derived outputs are sufficient to inspect the exact values reported in the manuscript. The included raw and lookup CSV files support rerunning the analysis pipeline.
+## Public source data
 
-## External source links retained for provenance
-
-Raw ecological monitoring data source:
+Raw ecological monitoring data:
 
 - Australian Institute of Marine Science Long-Term Monitoring Program: https://apps.aims.gov.au/reef-monitoring/reefs
 - AIMS metadata portal: http://apps.aims.gov.au/metadata/
 
-Thermal-stress data source:
+Thermal-stress data:
 
 - NOAA Coral Reef Watch: https://coralreefwatch.noaa.gov/
 
-Tropical cyclone data source:
+Tropical cyclone and wind data:
 
 - Australian Bureau of Meteorology Tropical Cyclone Database: http://www.bom.gov.au/cyclone/history/database/
-- Cyclone history portal: http://www.bom.gov.au/cyclone/history/index.shtml
+- Australian Bureau of Meteorology cyclone history portal: http://www.bom.gov.au/cyclone/history/index.shtml
 
-Spatial boundary data for map rendering:
+Spatial boundary and reef feature data used for map rendering:
 
-- Great Barrier Reef Marine Park Authority: https://www.gbrmpa.gov.au/
+- Great Barrier Reef Marine Park Authority spatial data: https://www.gbrmpa.gov.au/
+- Australian Government spatial and regional boundary data portals, as applicable for NRM and GBR boundary layers.
 
-## Not included
+## Excluded files
 
-The repository excludes non-CSV spatial boundary files and other large binary/map assets, including shapefiles under `data/Great_Barrier_Reef_Features/` and `data/NRM_Terrestrial_and_Marine_Regions_GBR_GDA20/`. These files are only needed to regenerate the study-area map and can be obtained from the public spatial-data providers above.
+The repository excludes large or non-essential binary assets, including:
 
-Manuscript drafts, cover letters, and journal-preparation notes are intentionally excluded because this repository is only for data and code availability.
+- shapefile bundles under `data/Great_Barrier_Reef_Features/`
+- shapefile bundles under `data/NRM_Terrestrial_and_Marine_Regions_GBR_GDA20/`
+- generated PDF/JPG figure files
+- reference PDFs
+- manuscript drafts, cover letters and submission-management notes
 
-## Repository URL
-
-Repository link:
-
-- GitHub repository: https://github.com/Wangmingzhuang1/gbr-disturbance-sequence-data-code
+The map script can run without the optional shapefiles; when those files are absent, it renders the reef points and base geography using the included CSV coordinates and public map features.
