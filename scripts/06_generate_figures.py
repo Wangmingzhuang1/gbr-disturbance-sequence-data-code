@@ -148,29 +148,46 @@ def adjusted_effect(data, outcome, exposure, method="ols"):
     }
 
 
-def adjusted_retention_effect(data, exposure, method="ols"):
-    z_col = f"{exposure}_z"
-    work = data.copy()
-    if z_col not in work:
-        work[z_col] = zscore(work[exposure])
-    formula = (
-        f"retention ~ recent_max_dhw_z + recent_max_wind_z "
-        f"+ {z_col} + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)"
-    )
-    model = robust_gee(work, formula) if method == "gee" else robust_ols(work, formula)
-    ci = model.conf_int().loc[z_col].tolist()
-    return {
-        "coef": model.params[z_col],
-        "low": ci[0],
-        "high": ci[1],
-        "p": model.pvalues[z_col],
-        "term": exposure,
-        "method": method,
-    }
-
-
 def effect_table(data, outcome, exposures, method="ols"):
     return pd.DataFrame([adjusted_effect(data, outcome, exposure, method) for exposure in exposures])
+
+
+def response_metric_effects(data):
+    specs = [
+        (
+            "Absolute loss",
+            "loss_abs ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+            "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)",
+            THERMAL,
+        ),
+        (
+            "Nadir cover",
+            "nadir_hc ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+            "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)",
+            GREEN,
+        ),
+        (
+            "Proportional retention",
+            "retention ~ recent_max_dhw_z + recent_max_wind_z "
+            "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)",
+            GOLD,
+        ),
+    ]
+    rows = []
+    for label, formula, color in specs:
+        model = robust_ols(data, formula)
+        conf = model.conf_int().loc["heatwave_years_5yr_z"].tolist()
+        rows.append(
+            {
+                "coef": model.params["heatwave_years_5yr_z"],
+                "low": conf[0],
+                "high": conf[1],
+                "p": model.pvalues["heatwave_years_5yr_z"],
+                "label": label,
+                "color": color,
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def model_terms(data, formula, terms, method="ols"):
@@ -286,7 +303,14 @@ def figure_02(eco, legacy):
 
 
 def figure_03(legacy):
-    fig, axes = plt.subplots(1, 4, figsize=(7.1, 2.25))
+    fig = plt.figure(figsize=(7.1, 4.6))
+    gs = fig.add_gridspec(2, 2)
+    axes = [
+        fig.add_subplot(gs[0, 0]),
+        fig.add_subplot(gs[0, 1]),
+        fig.add_subplot(gs[1, 0]),
+        fig.add_subplot(gs[1, 1]),
+    ]
 
     axes[0].scatter(legacy["baseline_hc"], legacy["loss_abs"], s=9, color=NEUTRAL, alpha=0.38)
     sns.regplot(
@@ -334,39 +358,36 @@ def figure_03(legacy):
     axes[1].set_ylabel("Absolute hard-coral loss (%)")
     panel_label(axes[1], "b")
 
-    loss_outcomes = [
-        ("loss_abs", "Absolute loss"),
-        ("positive_loss", "Positive loss"),
-        ("rel_loss_clipped", "Clipped relative loss"),
-    ]
-    rows = []
-    for outcome, label in loss_outcomes:
-        result = adjusted_effect(legacy, outcome, "heatwave_years_5yr", "ols")
-        result["label"] = label
-        rows.append(result)
-    table = pd.DataFrame(rows)
-    plot_forest(
-        axes[2],
-        table,
-        table["label"].tolist(),
-        [THERMAL, THERMAL, THERMAL],
-        "Coefficient",
+    rel_loss_pct = legacy["rel_loss_clipped"] * 100
+    scatter = axes[2].scatter(
+        rel_loss_pct,
+        legacy["loss_abs"],
+        c=legacy["baseline_hc"],
+        cmap="cividis_r",
+        s=10,
+        alpha=0.72,
+        edgecolors="none",
     )
+    axes[2].axvline(0, color="#999999", lw=0.8)
+    axes[2].axhline(0, color="#999999", lw=0.8)
+    axes[2].set_xlim(-105, 105)
+    axes[2].set_xlabel("Clipped relative loss (%)")
+    axes[2].set_ylabel("Absolute hard-coral loss (%)")
+    cbar = fig.colorbar(scatter, ax=axes[2], fraction=0.046, pad=0.035)
+    cbar.set_label("Baseline hard-coral cover (%)")
     panel_label(axes[2], "c")
 
-    retention = adjusted_retention_effect(legacy, "heatwave_years_5yr", "ols")
-    retention_table = pd.DataFrame([{**retention, "label": "Retention"}])
+    table = response_metric_effects(legacy)
     plot_forest(
         axes[3],
-        retention_table,
-        ["Proportional\nretention"],
-        [NEUTRAL],
+        table,
+        table["label"].tolist(),
+        table["color"].tolist(),
         "Coefficient",
     )
-    axes[3].set_title(f"P = {retention['p']:.3f}", pad=3)
     panel_label(axes[3], "d")
 
-    fig.tight_layout(w_pad=1.15)
+    fig.tight_layout(w_pad=1.25, h_pad=1.45)
     save_figure(fig, 3)
 
 
@@ -645,7 +666,76 @@ def arrow(ax, start, end):
     )
 
 
-def figure_06():
+def si_figure_03_residual_diagnostics(legacy):
+    formula = (
+        "loss_abs ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+        "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)"
+    )
+    model = robust_ols(legacy, formula)
+    diagnostic = legacy.copy()
+    diagnostic["fitted_loss"] = model.fittedvalues
+    diagnostic["residual"] = model.resid
+
+    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.3))
+
+    axes[0].scatter(diagnostic["fitted_loss"], diagnostic["residual"], s=10, color=NEUTRAL, alpha=0.42)
+    sns.regplot(
+        data=diagnostic,
+        x="fitted_loss",
+        y="residual",
+        scatter=False,
+        lowess=True,
+        color=THERMAL,
+        line_kws={"lw": 1.2},
+        ax=axes[0],
+    )
+    axes[0].axhline(0, color="#555555", lw=0.8, ls=":")
+    axes[0].set_xlabel("Fitted absolute loss")
+    axes[0].set_ylabel("Model residual")
+    axes[0].set_title("Residuals vs fitted")
+
+    axes[1].scatter(diagnostic["baseline_hc"], diagnostic["residual"], s=10, color=NEUTRAL, alpha=0.42)
+    sns.regplot(
+        data=diagnostic,
+        x="baseline_hc",
+        y="residual",
+        scatter=False,
+        lowess=True,
+        color=STORM,
+        line_kws={"lw": 1.2},
+        ax=axes[1],
+    )
+    axes[1].axhline(0, color="#555555", lw=0.8, ls=":")
+    axes[1].set_xlabel("Baseline hard-coral cover (%)")
+    axes[1].set_ylabel("Model residual")
+    axes[1].set_title("Residuals vs baseline")
+
+    bins = pd.qcut(diagnostic["baseline_hc"], q=5, duplicates="drop")
+    binned = (
+        diagnostic.assign(baseline_bin=bins)
+        .groupby("baseline_bin", observed=True)
+        .agg(
+            baseline_mid=("baseline_hc", "median"),
+            residual_sd=("residual", "std"),
+            n=("residual", "size"),
+        )
+        .reset_index(drop=True)
+    )
+    axes[2].plot(binned["baseline_mid"], binned["residual_sd"], marker="o", color=GREEN, lw=1.2, ms=4)
+    for _, row in binned.iterrows():
+        axes[2].text(row["baseline_mid"], row["residual_sd"], f"n={int(row['n'])}", fontsize=6, ha="center", va="bottom")
+    axes[2].set_xlabel("Baseline hard-coral cover (%)")
+    axes[2].set_ylabel("Residual SD")
+    axes[2].set_title("Residual spread by baseline")
+
+    for label, ax in zip(["a", "b", "c"], axes):
+        panel_label(ax, label)
+
+    fig.tight_layout(w_pad=1.5)
+    save_si_figure(fig, 3)
+
+
+def si_figure_02_metric_framework():
     fig, ax = plt.subplots(1, 1, figsize=(6.6, 3.3))
     ax.axis("off")
     ax.set_xlim(0, 1)
@@ -653,10 +743,10 @@ def figure_06():
 
     add_box(ax, (0.05, 0.68), "Repeated\nthermal exposure", THERMAL)
     add_box(ax, (0.38, 0.68), "Lower observable\nabsolute loss", GOLD)
-    add_box(ax, (0.70, 0.68), "Apparent damage\ndesensitization", STORM)
-    add_box(ax, (0.38, 0.35), "Response-metric\nconstraint", GREEN)
-    add_box(ax, (0.70, 0.35), "Possible community\nfiltering", "#777777")
-    add_box(ax, (0.38, 0.08), "Mechanism remains\npartly unresolved", "#555555", width=0.36)
+    add_box(ax, (0.70, 0.68), "Baseline-constrained\nsignal", STORM)
+    add_box(ax, (0.38, 0.35), "Absolute-loss\nmetric ceiling", GREEN)
+    add_box(ax, (0.70, 0.35), "Unresolved biological\nmechanisms", "#777777")
+    add_box(ax, (0.38, 0.08), "Additional taxonomic and\nphysiological data needed", "#555555", width=0.36)
 
     arrow(ax, (0.29, 0.76), (0.38, 0.76))
     arrow(ax, (0.62, 0.76), (0.70, 0.76))
@@ -665,18 +755,18 @@ def figure_06():
     arrow(ax, (0.50, 0.35), (0.50, 0.24))
     arrow(ax, (0.82, 0.35), (0.70, 0.24))
 
-    ax.text(0.05, 0.93, "Supported pattern", fontsize=8, fontweight="bold", color="#222222")
+    ax.text(0.05, 0.93, "Observed pattern", fontsize=8, fontweight="bold", color="#222222")
     ax.plot([0.05, 0.94], [0.62, 0.62], color="#dddddd", lw=0.8)
-    ax.text(0.05, 0.56, "Interpretive boundaries", fontsize=8, fontweight="bold", color="#222222")
+    ax.text(0.05, 0.56, "Interpretive boundary", fontsize=8, fontweight="bold", color="#222222")
     ax.text(
         0.05,
         0.02,
-        "The framework separates the observed metric pattern from mechanisms that cannot be isolated using cover data alone.",
+        "The framework separates baseline-constrained observable loss from biological mechanisms that cover data alone cannot isolate.",
         fontsize=7,
         color="#333333",
     )
     ax.text(0.015, 0.965, "a", transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
-    save_figure(fig, 6)
+    save_si_figure(fig, 2)
 
 
 def main():
@@ -692,9 +782,11 @@ def main():
     figure_04(legacy)
     print("Generating Figure 5...")
     figure_05(legacy)
-    print("Generating Figure 6...")
-    figure_06()
-    print("Figures 2-6 generated.")
+    print("Generating SI Figure 2...")
+    si_figure_02_metric_framework()
+    print("Generating SI Figure 3...")
+    si_figure_03_residual_diagnostics(legacy)
+    print("Figures 2-5 and SI Figures 2-3 generated.")
 
 
 if __name__ == "__main__":

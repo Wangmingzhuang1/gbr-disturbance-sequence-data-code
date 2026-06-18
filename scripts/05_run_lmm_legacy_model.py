@@ -952,8 +952,8 @@ def main():
         index=False,
     )
 
-    print("\nReviewer-risk sensitivity models")
-    print("--------------------------------")
+    print("\nResponse-metric and dependence sensitivity models")
+    print("-------------------------------------------------")
     diagnostic_rows = []
 
     alternative_specs = [
@@ -986,6 +986,30 @@ def main():
             )
         )
         print_terms(model_name, result, terms)
+
+    retention_cutoff_formula = (
+        "retention ~ recent_max_dhw_z + recent_max_wind_z "
+        "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)"
+    )
+    for cutoff in (5, 10):
+        cutoff_df = df[df["baseline_hc"] > cutoff].copy()
+        if cutoff_df.empty:
+            continue
+        model_name = f"Proportional-retention model, baseline > {cutoff}%"
+        result = robust_ols(cutoff_df, retention_cutoff_formula)
+        diagnostic_rows.extend(
+            model_rows(
+                result,
+                "Table S8",
+                model_name,
+                "reef-cluster robust OLS",
+                "retention",
+                terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
+                n_reefs=cutoff_df["reef_name"].nunique(),
+                extra={"baseline_cutoff_percent": cutoff},
+            )
+        )
+        print_terms(model_name, result, [("heatwave_years_5yr_z", "5-year heatwave years")])
 
     no_event_type_formula = (
         "loss_abs ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
@@ -1104,7 +1128,7 @@ def main():
         )
 
     pd.DataFrame(diagnostic_rows).to_csv(
-        os.path.join(TABLE_DIR, "table_s8_reviewer_risk_sensitivity.csv"),
+        os.path.join(TABLE_DIR, "table_s8_response_metric_dependence_sensitivity.csv"),
         index=False,
     )
 
