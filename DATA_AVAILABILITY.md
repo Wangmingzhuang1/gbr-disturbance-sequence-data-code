@@ -1,10 +1,10 @@
 # Data availability and provenance
 
-This repository contains the CSV inputs, derived matrices, analysis scripts and machine-readable result tables needed to reproduce the manuscript analyses.
+This repository contains the processed CSV inputs, derived analysis matrices, analysis scripts and machine-readable result tables needed to reproduce the manuscript analyses.
 
 ## Included directly
 
-The following CSV files are included because they are compact and required for reproducibility:
+The following files are included because they are compact and required for reproducibility:
 
 - `data/eco_response_master_matrix_merged.csv`
 - `data/master_disturbance_matrix.csv`
@@ -18,7 +18,7 @@ The following CSV files are included because they are compact and required for r
 - `output/tables/table_s5_window_sensitivity.csv`
 - `output/tables/table_s6_baseline_loss_subsets.csv`
 - `output/tables/table_s7_upper_quantile_boundary_check.csv`
-- `output/tables/table_s8_reviewer_risk_sensitivity.csv`
+- `output/tables/table_s8_response_metric_dependence_sensitivity.csv`
 - `output/tables/table_s9_ecological_sensitivity.csv`
 - `output/tables/table_s10_vif_and_sample_diagnostics.csv`
 
@@ -41,7 +41,7 @@ Tropical cyclone and wind data:
 Spatial boundary and reef feature data used for map rendering:
 
 - Great Barrier Reef Marine Park Authority spatial data: https://www.gbrmpa.gov.au/
-- Australian Government spatial and regional boundary data portals, as applicable for NRM and GBR boundary layers.
+- Australian Government spatial and regional boundary data portals for NRM and GBR boundary layers.
 
 ## Excluded files
 
@@ -53,4 +53,4 @@ The repository excludes large or non-essential binary assets, including:
 - reference PDFs
 - manuscript drafts, cover letters and submission-management notes
 
-The map script can run without the optional shapefiles; when those files are absent, it renders the reef points and base geography using the included CSV coordinates and public map features.
+The map script can run without the optional shapefiles; when those files are absent, it renders the reef points and base geography using the included CSV coordinates and public map features. Generated figure binaries can be reproduced from the deposited processed data and scripts.
