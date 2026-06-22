@@ -4,6 +4,7 @@ import warnings
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.stats.outliers_influence import variance_inflation_factor
@@ -228,6 +229,36 @@ def model_rows(
             row.update(extra)
         rows.append(row)
     return rows
+
+
+def tost_row(result, term, equivalence_margin, model, response, n_reefs):
+    beta = float(result.params[term])
+    se = float(result.bse[term])
+    lower_stat = (beta + equivalence_margin) / se
+    upper_stat = (beta - equivalence_margin) / se
+    p_lower = 1 - stats.norm.cdf(lower_stat)
+    p_upper = stats.norm.cdf(upper_stat)
+    ci90_low = beta - stats.norm.ppf(0.95) * se
+    ci90_high = beta + stats.norm.ppf(0.95) * se
+    return {
+        "table": "Table S21",
+        "model": model,
+        "model_family": "TOST using reef-cluster robust OLS estimate",
+        "response": response,
+        "term": term,
+        "label": TERM_LABELS.get(term, term),
+        "beta": beta,
+        "z": np.nan,
+        "p": max(p_lower, p_upper),
+        "ci_low": ci90_low,
+        "ci_high": ci90_high,
+        "n_observations": int(result.nobs),
+        "n_reefs": n_reefs,
+        "equivalence_margin": equivalence_margin,
+        "p_lower_bound": p_lower,
+        "p_upper_bound": p_upper,
+        "interpretation": "equivalent within margin" if max(p_lower, p_upper) < 0.05 else "not equivalent within margin",
+    }
 
 
 def build_episode_dataset(df):
@@ -487,8 +518,8 @@ def variable_dictionary():
             ["nadir_hc", "Post-disturbance nadir hard-coral cover", "% cover", "AIMS LTMP", "Minimum non-missing observation from target year through 3 years after target year"],
             ["loss_abs", "Absolute hard-coral cover loss", "percentage points", "Derived", "baseline_hc - nadir_hc"],
             ["positive_loss", "Positive-only absolute loss", "percentage points", "Derived", "max(loss_abs, 0)"],
-            ["rel_loss_clipped", "Clipped relative loss", "Proportion", "Derived", "clip(loss_abs / baseline_hc, -1, 1)"],
-            ["retention", "Post-event proportional retention", "Proportion", "Derived", "nadir_hc / baseline_hc"],
+        ["rel_loss_clipped", "Clipped relative loss", "Proportion", "Derived", "clip(loss_abs / baseline_hc, -1, 1)"],
+        ["retention", "Post-event proportional retention", "Proportion", "Derived", "nadir_hc / baseline_hc"],
             ["recent_max_dhw", "Current thermal exposure", "Degree C-weeks", "NOAA Coral Reef Watch", "Maximum DHW in the target reef-year"],
             ["recent_max_wind", "Current wind exposure", "m s-1", "Australian Bureau of Meteorology", "Maximum wind speed in the target reef-year"],
             ["cumulative_dhw_wyr", "Historical cumulative DHW", "Degree C-weeks", "Derived", "Sum of annual maximum DHW over the previous w years"],
@@ -665,6 +696,72 @@ def diagnostic_summary(df, recurrence_formula):
     return pd.DataFrame(rows)
 
 
+def dhw_threshold_sensitivity(df):
+    source = pd.read_csv(MASTER_MATRIX_PATH).sort_values(["reef_name", "year"])
+    source_by_reef = {reef: group for reef, group in source.groupby("reef_name")}
+    rows = []
+    work = df.copy()
+
+    for threshold in (4, 6, 8):
+        col = f"heatwave_years_5yr_dhw{threshold}"
+        counts = []
+        for row in work.itertuples(index=False):
+            reef_data = source_by_reef.get(row.reef_name)
+            if reef_data is None:
+                counts.append(np.nan)
+                continue
+            past = reef_data[
+                (reef_data["year"] >= int(row.event_year) - 5)
+                & (reef_data["year"] < int(row.event_year))
+            ]
+            counts.append(int(past["max_dhw"].ge(threshold).sum()))
+        work[col] = counts
+        work[f"{col}_z"] = zscore(work[col])
+
+        formula = (
+            "loss_abs ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+            f"+ {col}_z + storm_years_5yr_z "
+            "+ yrs_since_last_dist_z + C(event_type)"
+        )
+        model_data = work.dropna(
+            subset=[
+                "loss_abs",
+                "baseline_hc_z",
+                "recent_max_dhw_z",
+                "recent_max_wind_z",
+                f"{col}_z",
+                "storm_years_5yr_z",
+                "yrs_since_last_dist_z",
+                "event_type",
+                "reef_name",
+            ]
+        )
+        result = robust_ols(model_data, formula)
+        term = f"{col}_z"
+        ci_low, ci_high = result.conf_int().loc[term].tolist()
+        rows.append(
+            {
+                "table": "Table S20",
+                "model": "DHW-threshold recurrence sensitivity",
+                "model_family": "reef-cluster robust OLS",
+                "response": "loss_abs",
+                "threshold_dhw": threshold,
+                "term": term,
+                "label": f"5-year heatwave years, DHW >= {threshold}",
+                "beta": result.params[term],
+                "z": result.tvalues[term],
+                "p": result.pvalues[term],
+                "ci_low": ci_low,
+                "ci_high": ci_high,
+                "n_observations": int(result.nobs),
+                "n_reefs": model_data["reef_name"].nunique(),
+                "mean_prior_count": model_data[col].mean(),
+                "events_with_prior_count_gt0": int(model_data[col].gt(0).sum()),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def main():
     df = prepare_data()
     os.makedirs(TABLE_DIR, exist_ok=True)
@@ -759,6 +856,19 @@ def main():
         os.path.join(TABLE_DIR, "table_s10_vif_and_sample_diagnostics.csv"),
         index=False,
     )
+    threshold_table = dhw_threshold_sensitivity(df)
+    threshold_table.to_csv(
+        os.path.join(TABLE_DIR, "table_s20_dhw_threshold_sensitivity.csv"),
+        index=False,
+    )
+    print("\nDHW-threshold sensitivity")
+    print("-------------------------")
+    for row in threshold_table.itertuples(index=False):
+        print(
+            f"DHW >= {row.threshold_dhw}: beta={row.beta:7.3f}  "
+            f"p={row.p:.4g}  N={row.n_observations}  "
+            f"events with prior count >0={row.events_with_prior_count_gt0}"
+        )
 
     print("\nResponse-metric sensitivity for heatwave years")
     print("----------------------------------------------")
@@ -956,6 +1066,40 @@ def main():
     print("-------------------------------------------------")
     diagnostic_rows = []
 
+    no_baseline_formula = (
+        "loss_abs ~ recent_max_dhw_z + recent_max_wind_z "
+        "+ heatwave_years_5yr_z + storm_years_5yr_z "
+        "+ yrs_since_last_dist_z + C(event_type)"
+    )
+    no_baseline_result = robust_ols(df, no_baseline_formula)
+    diagnostic_rows.extend(
+        model_rows(
+            no_baseline_result,
+            "Table S8",
+            "Absolute-loss model without baseline-cover adjustment",
+            "reef-cluster robust OLS",
+            "loss_abs",
+            terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
+            n_reefs=df["reef_name"].nunique(),
+        )
+    )
+    print_terms(
+        "Absolute-loss model without baseline-cover adjustment",
+        no_baseline_result,
+        [("heatwave_years_5yr_z", "5-year heatwave years")],
+    )
+    diagnostic_rows.extend(
+        model_rows(
+            recurrence_ols,
+            "Table S8",
+            "Absolute-loss model with baseline-cover adjustment",
+            "reef-cluster robust OLS",
+            "loss_abs",
+            terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
+            n_reefs=df["reef_name"].nunique(),
+        )
+    )
+
     alternative_specs = [
         (
             "Nadir-cover model",
@@ -1126,6 +1270,63 @@ def main():
             f"Moran's I on reef-mean residuals: I={moran['morans_i']:.3f}, "
             f"p={moran['p']:.4g}, reefs={moran['n_reefs']}"
         )
+
+    spatial_equivalence_rows = []
+    if "sector" in df.columns:
+        print("\nSector-stratified recurrence models")
+        print("-----------------------------------")
+        for sector, sector_df in df.dropna(subset=["sector"]).groupby("sector"):
+            if sector_df["reef_name"].nunique() < 5 or len(sector_df) < 30:
+                continue
+            sector_result = robust_ols(sector_df, recurrence_formula)
+            spatial_equivalence_rows.extend(
+                model_rows(
+                    sector_result,
+                    "Table S21",
+                    "Sector-stratified recurrence model",
+                    "reef-cluster robust OLS",
+                    "loss_abs",
+                    terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
+                    n_reefs=sector_df["reef_name"].nunique(),
+                    extra={
+                        "sector": sector,
+                        "n_sector_observations": len(sector_df),
+                    },
+                )
+            )
+            print_terms(
+                f"Sector-stratified recurrence model: {sector}",
+                sector_result,
+                [("heatwave_years_5yr_z", "5-year heatwave years")],
+            )
+
+    retention_result = robust_ols(
+        df,
+        "retention ~ recent_max_dhw_z + recent_max_wind_z "
+        "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)",
+    )
+    spatial_equivalence_rows.append(
+        tost_row(
+            retention_result,
+            "heatwave_years_5yr_z",
+            0.10,
+            "Proportional-retention equivalence check",
+            "retention",
+            df["reef_name"].nunique(),
+        )
+    )
+    print(
+        "Retention TOST, margin +/-0.10: "
+        f"beta={retention_result.params['heatwave_years_5yr_z']:.4f}, "
+        f"pTOST={spatial_equivalence_rows[-1]['p']:.4g}, "
+        f"90% CI=[{spatial_equivalence_rows[-1]['ci_low']:.3f}, "
+        f"{spatial_equivalence_rows[-1]['ci_high']:.3f}]"
+    )
+
+    pd.DataFrame(spatial_equivalence_rows).to_csv(
+        os.path.join(TABLE_DIR, "table_s21_spatial_and_retention_equivalence.csv"),
+        index=False,
+    )
 
     pd.DataFrame(diagnostic_rows).to_csv(
         os.path.join(TABLE_DIR, "table_s8_response_metric_dependence_sensitivity.csv"),

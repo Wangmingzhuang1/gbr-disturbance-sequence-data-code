@@ -164,7 +164,7 @@ def draw_map_panel(ax, sites, color_col, cmap, cbar_label, panel_letter):
     cbar.ax.tick_params(labelsize=6, length=2)
 
     if panel_letter:
-        ax.text(0.025, 0.975, panel_letter, transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
+        ax.text(0.025, 0.975, str(panel_letter).upper(), transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
     ax.set_aspect("equal", adjustable="box")
 
 
@@ -196,7 +196,7 @@ def plot_si_figure_1(sites):
         "storm_recurrence_frequency", 
         "viridis", 
         "Storm recurrence frequency (1985-2025)", 
-        "a"
+        "A"
     )
     
     # Right Panel: Concurrent Recurrence
@@ -207,7 +207,7 @@ def plot_si_figure_1(sites):
         "concurrent_recurrence_frequency", 
         "magma", 
         "Concurrent recurrence frequency (1985-2025)", 
-        "b"
+        "B"
     )
     
     fig.tight_layout(w_pad=2.0)

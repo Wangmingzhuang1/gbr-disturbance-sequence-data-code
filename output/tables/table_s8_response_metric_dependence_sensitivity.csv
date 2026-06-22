@@ -1,4 +1,6 @@
 table,model,model_family,response,term,label,beta,z,p,ci_low,ci_high,n_observations,n_reefs,baseline_cutoff_percent,n_episodes,episode_rule,permutations
+Table S8,Absolute-loss model without baseline-cover adjustment,reef-cluster robust OLS,loss_abs,heatwave_years_5yr_z,5-year heatwave years,-1.722737510272953,-2.5297056910013853,0.011415823890772676,-3.057479131388016,-0.3879958891578903,525,92,,,,
+Table S8,Absolute-loss model with baseline-cover adjustment,reef-cluster robust OLS,loss_abs,heatwave_years_5yr_z,5-year heatwave years,-2.622107766233771,-4.321500168874825,1.549719332985489e-05,-3.8113329391067943,-1.4328825933607476,525,92,,,,
 Table S8,Nadir-cover model,reef-cluster robust OLS,nadir_hc,baseline_hc_z,Baseline hard-coral cover,6.7212203978819645,9.678130584340034,3.7348248018792775e-22,5.360074275993495,8.082366519770433,525,92,,,,
 Table S8,Nadir-cover model,reef-cluster robust OLS,nadir_hc,heatwave_years_5yr_z,5-year heatwave years,2.62210776623377,4.3215001688748185,1.5497193329855347e-05,1.4328825933607454,3.8113329391067943,525,92,,,,
 Table S8,Proportional-retention model,reef-cluster robust OLS,retention,heatwave_years_5yr_z,5-year heatwave years,-0.002549340312412808,-0.053669984749273536,0.9571980970224812,-0.09564821522373512,0.09054953459890952,525,92,,,,

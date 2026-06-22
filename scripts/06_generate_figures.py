@@ -110,7 +110,7 @@ def save_si_figure(fig, number):
 
 
 def panel_label(ax, label):
-    ax.text(-0.12, 1.08, label, transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
+    ax.text(-0.12, 1.08, str(label).upper(), transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
 
 
 def robust_ols(data, formula):
@@ -175,7 +175,14 @@ def response_metric_effects(data):
     ]
     rows = []
     for label, formula, color in specs:
-        model = robust_ols(data, formula)
+        outcome = formula.split("~", 1)[0].strip()
+        work = data.dropna(subset=[outcome]).copy()
+        standardized_outcome = f"{outcome}_standardized"
+        work[standardized_outcome] = zscore(work[outcome])
+        standardized_formula = formula.replace(
+            f"{outcome} ~", f"{standardized_outcome} ~", 1
+        )
+        model = robust_ols(work, standardized_formula)
         conf = model.conf_int().loc["heatwave_years_5yr_z"].tolist()
         rows.append(
             {
@@ -303,7 +310,7 @@ def figure_02(eco, legacy):
 
 
 def figure_03(legacy):
-    fig = plt.figure(figsize=(7.1, 4.6))
+    fig = plt.figure(figsize=(7.1, 5.35))
     gs = fig.add_gridspec(2, 2)
     axes = [
         fig.add_subplot(gs[0, 0]),
@@ -383,11 +390,11 @@ def figure_03(legacy):
         table,
         table["label"].tolist(),
         table["color"].tolist(),
-        "Coefficient",
+        "Standardized response coefficient",
     )
     panel_label(axes[3], "d")
 
-    fig.tight_layout(w_pad=1.25, h_pad=1.45)
+    fig.tight_layout(w_pad=1.25, h_pad=1.15)
     save_figure(fig, 3)
 
 
@@ -405,7 +412,7 @@ def figure_04(legacy):
         ("yrs_since_last_dist_z", "Return interval", NEUTRAL),
     ]
 
-    fig, axes = plt.subplots(2, 2, figsize=(7.1, 4.8))
+    fig, axes = plt.subplots(2, 2, figsize=(7.1, 5.45))
     variables = [term[0] for term in terms]
     labels = [term[1] for term in terms]
     colors = [term[2] for term in terms]
@@ -534,7 +541,7 @@ def figure_04(legacy):
     ax_d.legend(loc="upper left", frameon=False, fontsize=5.8)
     panel_label(ax_d, "d")
 
-    fig.tight_layout(h_pad=1.8, w_pad=1.5)
+    fig.tight_layout(h_pad=1.35, w_pad=1.5)
     save_figure(fig, 4)
 
 
@@ -563,8 +570,8 @@ def figure_05(legacy):
     fig, axes = plt.subplots(
         1,
         3,
-        figsize=(7.2, 2.55),
-        gridspec_kw={"width_ratios": [1.18, 1.0, 1.0]},
+        figsize=(7.2, 3.35),
+        gridspec_kw={"width_ratios": [1.12, 1.0, 1.0]},
     )
     cax = inset_axes(
         axes[0],
@@ -645,7 +652,7 @@ def figure_05(legacy):
     axes[2].legend(loc="upper right", fontsize=6.0, frameon=True, facecolor='white', edgecolor='none', framealpha=0.8)
     panel_label(axes[2], "c")
 
-    fig.subplots_adjust(left=0.16, right=0.98, bottom=0.24, top=0.88, wspace=0.70)
+    fig.subplots_adjust(left=0.16, right=0.98, bottom=0.18, top=0.90, wspace=0.64)
     save_figure(fig, 5)
 
 
@@ -676,7 +683,7 @@ def si_figure_03_residual_diagnostics(legacy):
     diagnostic["fitted_loss"] = model.fittedvalues
     diagnostic["residual"] = model.resid
 
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.3))
+    fig, axes = plt.subplots(1, 3, figsize=(7.1, 3.05))
 
     axes[0].scatter(diagnostic["fitted_loss"], diagnostic["residual"], s=10, color=NEUTRAL, alpha=0.42)
     sns.regplot(
@@ -728,44 +735,60 @@ def si_figure_03_residual_diagnostics(legacy):
     axes[2].set_ylabel("Residual SD")
     axes[2].set_title("Residual spread by baseline")
 
-    for label, ax in zip(["a", "b", "c"], axes):
+    for label, ax in zip(["A", "B", "C"], axes):
         panel_label(ax, label)
 
-    fig.tight_layout(w_pad=1.5)
+    fig.tight_layout(w_pad=1.2)
     save_si_figure(fig, 3)
 
 
 def si_figure_02_metric_framework():
-    fig, ax = plt.subplots(1, 1, figsize=(6.6, 3.3))
+    fig, ax = plt.subplots(1, 1, figsize=(6.8, 3.8))
     ax.axis("off")
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
 
-    add_box(ax, (0.05, 0.68), "Repeated\nthermal exposure", THERMAL)
-    add_box(ax, (0.38, 0.68), "Lower observable\nabsolute loss", GOLD)
-    add_box(ax, (0.70, 0.68), "Baseline-constrained\nsignal", STORM)
-    add_box(ax, (0.38, 0.35), "Absolute-loss\nmetric ceiling", GREEN)
-    add_box(ax, (0.70, 0.35), "Unresolved biological\nmechanisms", "#777777")
-    add_box(ax, (0.38, 0.08), "Additional taxonomic and\nphysiological data needed", "#555555", width=0.36)
+    add_box(ax, (0.04, 0.66), "Prior recurrent\nheat exposure", THERMAL, width=0.20)
+    add_box(ax, (0.04, 0.28), "Current DHW and\nwind exposure", STORM, width=0.20)
 
-    arrow(ax, (0.29, 0.76), (0.38, 0.76))
-    arrow(ax, (0.62, 0.76), (0.70, 0.76))
-    arrow(ax, (0.50, 0.68), (0.50, 0.51))
-    arrow(ax, (0.82, 0.68), (0.82, 0.51))
-    arrow(ax, (0.50, 0.35), (0.50, 0.24))
-    arrow(ax, (0.82, 0.35), (0.70, 0.24))
+    add_box(ax, (0.34, 0.73), "Lower observable\nabsolute loss\nSTRONG", GOLD, width=0.25, height=0.18)
+    add_box(ax, (0.34, 0.47), "Altered algal and\nmacroalgal baselines\nMODERATE", GREEN, width=0.25, height=0.18)
+    add_box(ax, (0.34, 0.21), "Full-matrix proportional\nretention\nNO INCREASE", "#777777", width=0.25, height=0.18)
 
-    ax.text(0.05, 0.93, "Observed pattern", fontsize=8, fontweight="bold", color="#222222")
-    ax.plot([0.05, 0.94], [0.62, 0.62], color="#dddddd", lw=0.8)
-    ax.text(0.05, 0.56, "Interpretive boundary", fontsize=8, fontweight="bold", color="#222222")
+    add_box(ax, (0.70, 0.73), "Baseline stock constrains\nlater absolute loss\nSUPPORTED", "#4b6f8f", width=0.26, height=0.18)
+    add_box(ax, (0.70, 0.47), "Community filtering or\ndisturbance legacy\nPLAUSIBLE, NOT ISOLATED", "#777777", width=0.26, height=0.18)
+    add_box(ax, (0.70, 0.21), "Increased physiological\ntolerance\nNOT TESTED", "#999999", width=0.26, height=0.18)
+
+    arrow(ax, (0.24, 0.74), (0.34, 0.82))
+    arrow(ax, (0.24, 0.74), (0.34, 0.56))
+    arrow(ax, (0.24, 0.74), (0.34, 0.30))
+    ax.annotate(
+        "",
+        xy=(0.34, 0.77),
+        xytext=(0.24, 0.40),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2,
+            color="#555555",
+            connectionstyle="arc3,rad=-0.28",
+            shrinkA=2,
+            shrinkB=2,
+        ),
+    )
+    arrow(ax, (0.59, 0.82), (0.70, 0.82))
+    arrow(ax, (0.59, 0.56), (0.70, 0.56))
+    arrow(ax, (0.59, 0.30), (0.70, 0.30))
+
+    ax.text(0.04, 0.94, "Exposure history", fontsize=8, fontweight="bold", color="#222222")
+    ax.text(0.34, 0.94, "Evidence in this study", fontsize=8, fontweight="bold", color="#222222")
+    ax.text(0.70, 0.94, "Interpretive status", fontsize=8, fontweight="bold", color="#222222")
     ax.text(
+        0.04,
         0.05,
-        0.02,
-        "The framework separates baseline-constrained observable loss from biological mechanisms that cover data alone cannot isolate.",
-        fontsize=7,
+        "Arrows organize competing interpretations; they do not represent an identified causal pathway.",
+        fontsize=6.5,
         color="#333333",
     )
-    ax.text(0.015, 0.965, "a", transform=ax.transAxes, fontsize=10, fontweight="bold", va="top")
     save_si_figure(fig, 2)
 
 
