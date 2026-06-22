@@ -37,6 +37,24 @@ The following files are included because they are compact and required for repro
 - `output/tables/table_s20_dhw_threshold_sensitivity.csv`
 - `output/tables/table_s21_spatial_and_retention_equivalence.csv`
 
+## Submitted supplementary-table mapping
+
+The repository retains source tables S1-S21 as separate machine-readable outputs. The submitted Supplementary Information uses the following consolidated S1-S18 mapping:
+
+| Submitted table | Machine-readable source table(s) |
+|---|---|
+| S1-S8 | source S1-S8 |
+| S9 | source S9 + S10 |
+| S10 | source S11 |
+| S11 | source S12 + S13 |
+| S12 | source S14 |
+| S13 | source S15 |
+| S14 | source S16 + S18 |
+| S15 | source S17 |
+| S16 | source S19 |
+| S17 | source S20 |
+| S18 | source S21 |
+
 ## Public source data
 
 Raw ecological monitoring data:

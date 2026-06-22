@@ -45,6 +45,24 @@ python scripts/08_composition_sensitivity.py
 - `scripts/08_composition_sensitivity.py` reproduces the composition-matched event matrix, composition diagnostics, all-category scan, denominator sensitivity, category-to-loss sensitivity, and the machine-readable source tables for Supplementary Tables S11-S19. The script reads `data/coral_species_data_all.csv` when present, and otherwise falls back to per-reef CSVs under `data/coral_species_data/`.
 - `scripts/verify_contamination.py` and `scripts/verify_text_quality.py` are audit helpers used during manuscript checking.
 
+## Submitted supplementary-table mapping
+
+The repository retains the original machine-readable source tables S1-S21. The submitted Supplementary Information consolidates them into S1-S18 without renaming or deleting analysis outputs.
+
+| Submitted table | Machine-readable source table(s) |
+|---|---|
+| S1-S8 | source S1-S8 |
+| S9 | source S9 + S10 |
+| S10 | source S11 |
+| S11 | source S12 + S13 |
+| S12 | source S14 |
+| S13 | source S15 |
+| S14 | source S16 + S18 |
+| S15 | source S17 |
+| S16 | source S19 |
+| S17 | source S20 |
+| S18 | source S21 |
+
 ## Large or external assets
 
 Large non-CSV spatial files, reference PDFs, and journal-preparation materials are excluded. Public source websites for ecological monitoring, climate products, cyclone records, and spatial boundaries are provided in `DATA_AVAILABILITY.md`. Generated figure binaries can be recreated from the deposited processed data and scripts.
