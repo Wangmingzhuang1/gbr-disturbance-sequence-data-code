@@ -1,0 +1,11 @@
+样本量检查：525 reef-years（预期 525）；92 个 reefs。
+关键响应：loss_abs；retention = nadir_hc / baseline_hc（raw、未裁剪）。
+关键暴露：heatwave_years_5yr；当前 DHW/wind、storm history、return interval、event type 沿用主模型。
+模型状态：9/9 成功；失败 0。
+对数响应比实现/结果列：0（未新增或恢复）；禁止列命中：[]。
+终稿/既有输入未修改：通过。
+写入范围：仅 C:\Users\wmz\Desktop\CEE_Compound\tmp\gbr_repo_sync\analysis\baseline_cover_threshold_validation。
+输入矩阵 SHA256：c756698eeeb4bd859d388e1ce5fe7444da9501dcbb9eb6a06cb1680d117d2cb5。
+主模型脚本 SHA256：5dd6ee0a466a8ff0c8583dbd08641735e3ee1c22bf3abf6f79854a0feb25fa4a。
+Python：3.12.6；平台：Windows-11-10.0.26200-SP0。
+pandas 2.3.3; numpy 2.3.5; scipy 1.16.3; statsmodels 0.14.6; sklearn 1.8.0; matplotlib 3.10.8; patsy 1.0.2。

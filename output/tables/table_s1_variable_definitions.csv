@@ -2,6 +2,9 @@ variable,definition,unit,source,construction_rule
 reef_name,Reef identifier,Categorical,AIMS LTMP,Used for reef-cluster robust standard errors and GEE grouping
 event_year,Target disturbance year,Year,AIMS-aligned environmental records,"Years crossing heatwave, storm or concurrent thresholds"
 event_type,Target event class,Categorical,Derived,"Heatwave_Only, Storm_Only or Concurrent"
+baseline_year,Baseline observation year,Year,AIMS LTMP,Year of the most recent non-missing hard-coral cover observation within 3 years before the target year
+nadir_year,Nadir observation year,Year,AIMS LTMP,Year of the minimum hard-coral cover observation from the target year through 3 years after the target year
+nadir_event_interval,Nadir timing relative to target event,Years,Derived,nadir_year - event_year
 baseline_hc,Pre-disturbance hard-coral cover,% cover,AIMS LTMP,Most recent non-missing observation within 3 years before target year
 nadir_hc,Post-disturbance nadir hard-coral cover,% cover,AIMS LTMP,Minimum non-missing observation from target year through 3 years after target year
 loss_abs,Absolute hard-coral cover loss,percentage points,Derived,baseline_hc - nadir_hc

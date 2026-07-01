@@ -1,0 +1,3 @@
+response,model,spline_df,joint_interaction_test,statistic,df,p,n_observations,n_reefs,r_squared
+loss_abs,natural_cubic_spline_df4,4,baseline spline x prior heatwave recurrence,23.68521887403757,4,9.235775025374117e-05,525,92,0.4384500854206932
+retention,natural_cubic_spline_df4,4,baseline spline x prior heatwave recurrence,6.766041225105001,4,0.14878060790637532,525,92,0.2216709976662461

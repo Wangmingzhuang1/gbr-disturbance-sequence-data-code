@@ -508,12 +508,69 @@ def sample_composition(df):
     return pd.DataFrame(rows)
 
 
+def clean_event_flags(df):
+    clean = clean_event_summary()
+    if clean is None or clean.empty:
+        return df.assign(is_clean_event=np.nan)
+    clean_keys = clean[["reef_name", "event_year", "is_clean"]].copy()
+    return df.merge(clean_keys, on=["reef_name", "event_year"], how="left").rename(
+        columns={"is_clean": "is_clean_event"}
+    )
+
+
+def event_window_diagnostics(df):
+    rows = []
+    for heatwave_years, subset in df.groupby("heatwave_years_5yr"):
+        row = {
+            "grouping": "heatwave_years_5yr",
+            "group": heatwave_years,
+            "n_observations": len(subset),
+            "n_reefs": subset["reef_name"].nunique(),
+            "mean_loss_abs": subset["loss_abs"].mean(),
+            "median_loss_abs": subset["loss_abs"].median(),
+            "negative_loss_n": int(subset["loss_abs"].lt(0).sum()),
+            "negative_loss_proportion": subset["loss_abs"].lt(0).mean(),
+            "mean_baseline_hc": subset["baseline_hc"].mean(),
+            "recent_2024_2025_n": int(subset["event_year"].ge(2024).sum()),
+            "recent_2024_2025_proportion": subset["event_year"].ge(2024).mean(),
+        }
+        if "nadir_event_interval" in subset.columns:
+            row.update(
+                {
+                    "mean_nadir_event_interval": subset["nadir_event_interval"].mean(),
+                    "median_nadir_event_interval": subset["nadir_event_interval"].median(),
+                    "nadir_interval_0yr_proportion": subset["nadir_event_interval"].eq(0).mean(),
+                    "nadir_interval_1yr_or_less_proportion": subset["nadir_event_interval"].le(1).mean(),
+                }
+            )
+        rows.append(row)
+
+    if "nadir_event_interval" in df.columns:
+        for interval, subset in df.groupby("nadir_event_interval"):
+            rows.append(
+                {
+                    "grouping": "nadir_event_interval",
+                    "group": interval,
+                    "n_observations": len(subset),
+                    "n_reefs": subset["reef_name"].nunique(),
+                    "negative_loss_n": int(subset["loss_abs"].lt(0).sum()),
+                    "negative_loss_proportion": subset["loss_abs"].lt(0).mean(),
+                    "recent_2024_2025_n": int(subset["event_year"].ge(2024).sum()),
+                    "recent_2024_2025_proportion": subset["event_year"].ge(2024).mean(),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
 def variable_dictionary():
     return pd.DataFrame(
         [
             ["reef_name", "Reef identifier", "Categorical", "AIMS LTMP", "Used for reef-cluster robust standard errors and GEE grouping"],
             ["event_year", "Target disturbance year", "Year", "AIMS-aligned environmental records", "Years crossing heatwave, storm or concurrent thresholds"],
             ["event_type", "Target event class", "Categorical", "Derived", "Heatwave_Only, Storm_Only or Concurrent"],
+            ["baseline_year", "Baseline observation year", "Year", "AIMS LTMP", "Year of the most recent non-missing hard-coral cover observation within 3 years before the target year"],
+            ["nadir_year", "Nadir observation year", "Year", "AIMS LTMP", "Year of the minimum hard-coral cover observation from the target year through 3 years after the target year"],
+            ["nadir_event_interval", "Nadir timing relative to target event", "Years", "Derived", "nadir_year - event_year"],
             ["baseline_hc", "Pre-disturbance hard-coral cover", "% cover", "AIMS LTMP", "Most recent non-missing observation within 3 years before target year"],
             ["nadir_hc", "Post-disturbance nadir hard-coral cover", "% cover", "AIMS LTMP", "Minimum non-missing observation from target year through 3 years after target year"],
             ["loss_abs", "Absolute hard-coral cover loss", "percentage points", "Derived", "baseline_hc - nadir_hc"],
@@ -820,6 +877,10 @@ def main():
 
     variable_dictionary().to_csv(os.path.join(TABLE_DIR, "table_s1_variable_definitions.csv"), index=False)
     sample_composition(df).to_csv(os.path.join(TABLE_DIR, "table_s2_sample_composition.csv"), index=False)
+    event_window_diagnostics(df).to_csv(
+        os.path.join(TABLE_DIR, "diagnostic_event_window_and_negative_loss.csv"),
+        index=False,
+    )
     baseline_relationship_summary(df).to_csv(
         os.path.join(TABLE_DIR, "table_s6_baseline_loss_subsets.csv"),
         index=False,
@@ -1151,6 +1212,75 @@ def main():
                 terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
                 n_reefs=cutoff_df["reef_name"].nunique(),
                 extra={"baseline_cutoff_percent": cutoff},
+            )
+        )
+        print_terms(model_name, result, [("heatwave_years_5yr_z", "5-year heatwave years")])
+
+    retention_baseline_formula = (
+        "retention ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+        "+ heatwave_years_5yr_z + storm_years_5yr_z + yrs_since_last_dist_z + C(event_type)"
+    )
+    retention_baseline_result = robust_ols(df, retention_baseline_formula)
+    diagnostic_rows.extend(
+        model_rows(
+            retention_baseline_result,
+            "Table S8",
+            "Proportional-retention model with baseline-cover adjustment",
+            "reef-cluster robust OLS",
+            "retention",
+            terms=[("baseline_hc_z", "Baseline hard-coral cover"), ("heatwave_years_5yr_z", "5-year heatwave years")],
+            n_reefs=df["reef_name"].nunique(),
+            extra={"estimand_note": "Conditional retention sensitivity; not the primary raw proportional-retention estimand."},
+        )
+    )
+    print_terms(
+        "Proportional-retention model with baseline-cover adjustment",
+        retention_baseline_result,
+        [("baseline_hc_z", "Baseline hard-coral cover"), ("heatwave_years_5yr_z", "5-year heatwave years")],
+    )
+
+    subset_specs = [
+        (
+            "Recurrence model excluding 2024-2025 target years",
+            df[df["event_year"] < 2024].copy(),
+            "Excludes target years 2024 and 2025 to reduce incomplete-response-window leverage.",
+        ),
+        (
+            "Positive-loss subset recurrence model",
+            df[df["loss_abs"] >= 0].copy(),
+            "Restricts the response to observations with loss_abs >= 0.",
+        ),
+        (
+            "Positive-loss subset excluding 2024-2025 target years",
+            df[(df["loss_abs"] >= 0) & (df["event_year"] < 2024)].copy(),
+            "Combines the positive-loss restriction with removal of 2024-2025 target years.",
+        ),
+    ]
+    clean_df = clean_event_flags(df)
+    if "is_clean_event" in clean_df.columns:
+        clean_subset = clean_df[clean_df["is_clean_event"].eq(True)].copy()
+        if not clean_subset.empty:
+            subset_specs.append(
+                (
+                    "Clean-event subset recurrence model",
+                    clean_subset,
+                    "Target reef-years with no additional storm or heatwave in the 2 years before or after the target event.",
+                )
+            )
+    for model_name, subset_df, subset_definition in subset_specs:
+        if len(subset_df) < 30 or subset_df["reef_name"].nunique() < 5:
+            continue
+        result = robust_ols(subset_df, recurrence_formula)
+        diagnostic_rows.extend(
+            model_rows(
+                result,
+                "Table S8",
+                model_name,
+                "reef-cluster robust OLS",
+                "loss_abs",
+                terms=[("heatwave_years_5yr_z", "5-year heatwave years")],
+                n_reefs=subset_df["reef_name"].nunique(),
+                extra={"subset_definition": subset_definition},
             )
         )
         print_terms(model_name, result, [("heatwave_years_5yr_z", "5-year heatwave years")])

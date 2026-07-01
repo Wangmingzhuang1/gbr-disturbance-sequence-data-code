@@ -1,0 +1,9 @@
+analysis,metric,definition,role,estimate,ci_low,ci_high,p,cutoff_percent,equivalence_margin,interpretation
+Current validation response,absolute loss,baseline_hc - nadir_hc,Primary response; percentage points,,,,,,,
+Current validation response,raw proportional retention,nadir_hc / baseline_hc,Primary response; untrimmed and unclipped,,,,,,,
+Existing final-analysis context,raw proportional retention,Proportional-retention model,Separate sensitivity/context; not substituted for the validation response,-0.0025493403124128,-0.0956482152237351,0.0905495345989095,0.9571980970224812,,,
+Existing final-analysis context,baseline-cutoff retention,"Proportional-retention model, baseline > 5%",Separate sensitivity/context; not substituted for the validation response,0.047658117596685,-0.0053372682051762,0.1006535033985463,0.0779726682221104,5.0,,
+Existing final-analysis context,baseline-cutoff retention,"Proportional-retention model, baseline > 10%",Separate sensitivity/context; not substituted for the validation response,0.0606506525970912,0.0072816972359706,0.1140196079582118,0.0259216990765765,10.0,,
+Existing final-analysis context,raw proportional retention,Proportional-retention model with baseline-cover adjustment,Separate sensitivity/context; not substituted for the validation response,-0.2294066987614992,-0.3022243561118762,-0.1565890414111221,6.62795489213438e-10,,,
+Existing final-analysis context,raw proportional retention,Proportional-retention model with baseline-cover adjustment,Separate sensitivity/context; not substituted for the validation response,0.0285250150418674,-0.0548810620910221,0.1119310921747571,0.5026596238097394,,,
+Existing final-analysis context,TOST,Equivalence test for raw-retention recurrence coefficient,Separate inferential question; not a response metric,-0.0025493403124128,-0.0806803790819471,0.0755816984571215,0.0201052521760772,,0.1,equivalent within margin

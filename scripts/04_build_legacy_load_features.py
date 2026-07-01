@@ -87,6 +87,8 @@ def build_matrix():
 
         baseline_row = baseline_data.iloc[-1]
         nadir_row = response_data.loc[response_data["HC_cover"].idxmin()]
+        baseline_year = int(baseline_row["year"])
+        nadir_year = int(nadir_row["year"])
         baseline_hc = baseline_row["HC_cover"]
         nadir_hc = nadir_row["HC_cover"]
         loss_abs = baseline_hc - nadir_hc
@@ -102,6 +104,9 @@ def build_matrix():
             "event_type": row.event_type,
             "recent_max_dhw": row.max_dhw,
             "recent_max_wind": row.max_wind_ms,
+            "baseline_year": baseline_year,
+            "nadir_year": nadir_year,
+            "nadir_event_interval": nadir_year - event_year,
             "baseline_hc": baseline_hc,
             "nadir_hc": nadir_hc,
             "loss_abs": loss_abs,

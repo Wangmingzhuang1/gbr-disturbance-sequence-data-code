@@ -1,0 +1,3 @@
+cutoff,group,reef_years,reefs,first_year,last_year,baseline_mean,baseline_median,event_Heatwave_Only,event_Storm_Only,event_Concurrent
+10.0,<10%,60,33,1987,2025,6.602487381322642,6.999525555120603,38,18,4
+10.0,>=10%,465,92,1988,2025,27.56794120963033,24.95805055196487,263,161,41

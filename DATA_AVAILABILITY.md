@@ -36,6 +36,11 @@ The following files are included because they are compact and required for repro
 - `output/tables/table_s19_storm_category_reorganization_models.csv`
 - `output/tables/table_s20_dhw_threshold_sensitivity.csv`
 - `output/tables/table_s21_spatial_and_retention_equivalence.csv`
+- `analysis/baseline_cover_threshold_validation/results/*.csv`
+
+The `analysis/baseline_cover_threshold_validation` directory also includes the
+script and text outputs needed to reproduce the baseline interpretation-zone,
+threshold-sensitivity, and nonlinear spline-heterogeneity diagnostics.
 
 ## Submitted supplementary-table mapping
 

@@ -1,0 +1,10 @@
+diagnostic,variable,overlap_low,overlap_high,low_outside_opposing_range_fraction,high_outside_opposing_range_fraction,overlap_coefficient,classification_auc
+propensity_score,all listed covariates,0.43991365679194244,0.9411463730064825,0.016666666666666666,0.21505376344086022,0.6989247311827955,0.6848028673835125
+empirical_range,heatwave_years_5yr,0.0,3.0,0.0,0.025806451612903226,1.0,
+empirical_range,cumulative_dhw_5yr,0.0,21.44,0.0,0.11397849462365592,1.0,
+empirical_range,recent_max_dhw,0.0,12.45,0.0,0.004301075268817204,1.0,
+empirical_range,storm_years_5yr,0.0,2.0,0.0,0.0,1.0,
+empirical_range,cumulative_wind_5yr,0.0,70.118172,0.0,0.0,1.0,
+empirical_range,recent_max_wind,0.0,41.000868,0.0,0.04516129032258064,1.0,
+empirical_range,event_year,1988.0,2025.0,0.016666666666666666,0.0,1.0,
+empirical_range,yrs_since_last_dist,1.0,17.0,0.0,0.023655913978494623,1.0,

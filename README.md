@@ -13,6 +13,7 @@ The repository is for data and code availability. It does not include manuscript
 - `output/composition_event_analysis_matrix.csv`: composition-matched event matrix used by the composition analyses.
 - `output/tables/`: machine-readable source tables for Supplementary Tables S1-S21 and composition diagnostics.
 - `output/figures/`: generated figure output directory. Figure binaries are not versioned and are recreated by the scripts.
+- `analysis/baseline_cover_threshold_validation/`: baseline-threshold and spline-heterogeneity analysis used for interpretation-zone checks and Fig. S6.
 - `scripts/`: canonical data-processing, statistical-analysis, audit, and figure-generation scripts.
 - `DATA_AVAILABILITY.md`: data provenance, included files, and public source-data links for excluded large assets.
 
@@ -31,6 +32,7 @@ Run the full reproducibility workflow from the repository root:
 ```bash
 python scripts/04_build_legacy_load_features.py
 python scripts/05_run_lmm_legacy_model.py
+python analysis/baseline_cover_threshold_validation/run_threshold_validation.py
 python scripts/07_generate_map_figure.py
 python scripts/06_generate_figures.py
 python scripts/08_composition_sensitivity.py
@@ -40,6 +42,7 @@ python scripts/08_composition_sensitivity.py
 
 - `scripts/04_build_legacy_load_features.py` reconstructs `output/legacy_load_analysis_matrix.csv` and `output/legacy_load_enriched_eco.csv`.
 - `scripts/05_run_lmm_legacy_model.py` reproduces the OLS, GEE, window, threshold, sector-stratified, episode-level, TOST, and ecological-covariate sensitivity analyses, and exports Supplementary Tables S1-S10 plus the threshold and spatial-equivalence tables used in the final manuscript package.
+- `analysis/baseline_cover_threshold_validation/run_threshold_validation.py` reproduces the baseline interpretation-zone, threshold scan, and nonlinear spline-heterogeneity outputs used by Fig. S6 and the baseline-limited interpretation checks.
 - `scripts/07_generate_map_figure.py` reproduces the map panels for Figure 1 and Fig. S1. Non-CSV spatial boundary files are optional and are not included here; source links are listed in `DATA_AVAILABILITY.md`.
 - `scripts/06_generate_figures.py` reproduces the core non-map figures and residual diagnostics from the recurrence analyses.
 - `scripts/08_composition_sensitivity.py` reproduces the composition-matched event matrix, composition diagnostics, all-category scan, denominator sensitivity, category-to-loss sensitivity, and the machine-readable source tables for Supplementary Tables S11-S19. The script reads `data/coral_species_data_all.csv` when present, and otherwise falls back to per-reef CSVs under `data/coral_species_data/`.

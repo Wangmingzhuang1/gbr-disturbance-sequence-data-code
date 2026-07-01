@@ -16,6 +16,20 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE, "data")
 OUTPUT_DIR = os.path.join(BASE, "output", "figures")
 MATRIX_PATH = os.path.join(BASE, "output", "legacy_load_analysis_matrix.csv")
+SPLINE_EFFECTS_PATH = os.path.join(
+    BASE,
+    "analysis",
+    "baseline_cover_threshold_validation",
+    "results",
+    "nonlinear_marginal_effects.csv",
+)
+SPLINE_TESTS_PATH = os.path.join(
+    BASE,
+    "analysis",
+    "baseline_cover_threshold_validation",
+    "results",
+    "nonlinear_spline_tests.csv",
+)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 WINDOWS = (3, 5, 7, 8)
@@ -792,6 +806,75 @@ def si_figure_02_metric_framework():
     save_si_figure(fig, 2)
 
 
+def si_figure_06_smooth_heterogeneity(legacy):
+    effects = pd.read_csv(SPLINE_EFFECTS_PATH)
+    tests = pd.read_csv(SPLINE_TESTS_PATH).set_index("response")
+    response_specs = [
+        ("loss_abs", "Absolute hard-coral cover loss", "P < 0.001"),
+        ("retention", "Raw proportional retention", "P = 0.149"),
+    ]
+
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.05))
+    for ax, (response, title, p_label) in zip(axes, response_specs):
+        sub = effects.loc[effects["response"].eq(response)].sort_values("baseline_hc")
+        if len(sub) != 80 or int(tests.loc[response, "n_observations"]) != 525:
+            raise ValueError(f"Unexpected spline source data for {response}")
+
+        ax.fill_between(
+            sub["baseline_hc"],
+            sub["ci_low"],
+            sub["ci_high"],
+            color=THERMAL,
+            alpha=0.16,
+            linewidth=0,
+        )
+        ax.plot(
+            sub["baseline_hc"],
+            sub["recurrence_effect_per_1sd"],
+            color=THERMAL,
+            linewidth=1.6,
+        )
+        ax.axhline(0, color="#777777", linestyle="--", linewidth=0.8)
+
+        x_min = float(sub["baseline_hc"].min())
+        x_max = float(sub["baseline_hc"].max())
+        rug = legacy.loc[legacy["baseline_hc"].between(x_min, x_max), "baseline_hc"]
+        ax.plot(
+            rug,
+            np.full(len(rug), 0.018),
+            "|",
+            transform=ax.get_xaxis_transform(),
+            color=NEUTRAL,
+            alpha=0.18,
+            markersize=3.4,
+            markeredgewidth=0.55,
+            clip_on=True,
+        )
+
+        ax.set_xlim(x_min, x_max)
+        ax.set_xlabel("Baseline hard-coral cover (%)")
+        ax.set_title(title, fontweight="bold", pad=5)
+        ax.text(
+            0.98,
+            0.96,
+            f"Spline interaction\n{p_label}",
+            transform=ax.transAxes,
+            ha="right",
+            va="top",
+            fontsize=7,
+            color="#444444",
+        )
+        panel_label(ax, "A" if response == "loss_abs" else "B")
+
+    fig.supylabel(
+        "Marginal association per SD increase\nin prior heatwave years",
+        x=0.005,
+        fontsize=8,
+    )
+    fig.tight_layout(w_pad=1.7, rect=(0.035, 0, 1, 1))
+    save_si_figure(fig, 6)
+
+
 def main():
     print("Loading data...")
     legacy = prepare_matrix(pd.read_csv(MATRIX_PATH))
@@ -809,7 +892,9 @@ def main():
     si_figure_02_metric_framework()
     print("Generating SI Figure 3...")
     si_figure_03_residual_diagnostics(legacy)
-    print("Figures 2-5 and SI Figures 2-3 generated.")
+    print("Generating SI Figure 6...")
+    si_figure_06_smooth_heterogeneity(legacy)
+    print("Figures 2-5 and SI Figures 2-3 and 6 generated.")
 
 
 if __name__ == "__main__":
