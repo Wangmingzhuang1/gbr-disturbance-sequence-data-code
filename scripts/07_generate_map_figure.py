@@ -104,11 +104,11 @@ def draw_map_panel(ax, sites, color_col, cmap, cbar_label, panel_letter):
         try:
             gpd.read_file(nrm_shp).boundary.plot(
                 ax=ax,
-                color="#8c8c8c",
+                color="#949494",
                 linestyle=":",
-                linewidth=0.5,
+                linewidth=0.45,
                 zorder=2,
-                alpha=0.6,
+                alpha=0.52,
                 transform=ccrs.PlateCarree(),
             )
         except Exception as e:
@@ -119,9 +119,9 @@ def draw_map_panel(ax, sites, color_col, cmap, cbar_label, panel_letter):
         try:
             gpd.read_file(reef_shp).plot(
                 ax=ax,
-                facecolor="#7fcdbb",
+                facecolor="#74c7bb",
                 edgecolor="none",
-                alpha=0.35,
+                alpha=0.38,
                 zorder=1,
                 transform=ccrs.PlateCarree(),
             )
@@ -136,9 +136,9 @@ def draw_map_panel(ax, sites, color_col, cmap, cbar_label, panel_letter):
         sites["lat"],
         c=sites[color_col],
         cmap=cmap,
-        s=13,
-        edgecolors="black",
-        linewidths=0.25,
+        s=12,
+        edgecolors="#1f1f1f",
+        linewidths=0.22,
         alpha=0.9,
         zorder=10,
         transform=ccrs.PlateCarree(),
@@ -150,12 +150,12 @@ def draw_map_panel(ax, sites, color_col, cmap, cbar_label, panel_letter):
     ax.yaxis.set_major_formatter(LatitudeFormatter())
     ax.tick_params(length=2.5, width=0.8)
 
-    ax.text(144.15, -11.55, "N", fontsize=8, fontweight="bold", ha="center", transform=ccrs.PlateCarree())
+    ax.text(144.15, -11.05, "N", fontsize=7, fontweight="bold", ha="center", transform=ccrs.PlateCarree())
     ax.annotate(
         "",
-        xy=(144.15, -11.22),
-        xytext=(144.15, -12.05),
-        arrowprops=dict(arrowstyle="->", lw=1.0, color="black"),
+        xy=(144.15, -11.35),
+        xytext=(144.15, -12.12),
+        arrowprops=dict(arrowstyle="->", lw=0.85, color="black"),
         transform=ccrs.PlateCarree(),
     )
 
@@ -175,7 +175,7 @@ def plot_figure_1(sites):
         ax, 
         sites, 
         "thermal_recurrence_frequency", 
-        "inferno", 
+        "inferno_r",
         "Thermal recurrence frequency (1985-2025)", 
         ""
     )

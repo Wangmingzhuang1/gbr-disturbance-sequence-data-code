@@ -1,0 +1,30 @@
+analysis,category,area,area_specific_beta,interaction_joint_p,n,reefs,status,interaction_joint_q
+heatwave_x_six_management_interaction,Acropora,Burdekin,-2.0499192710767775,0.02535550901628816,453,87,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Acropora,Cape York,-1.0983432585727377,0.02535550901628816,453,87,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Acropora,Fitzroy,-0.8168683463341924,0.02535550901628816,453,87,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Acropora,Mackay Whitsunday,1.5159594726992904,0.02535550901628816,453,87,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Acropora,Wet Tropics,-1.5367547202796041,0.02535550901628816,453,87,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Montipora,Burdekin,0.238088741742999,0.05014164601293078,306,64,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Montipora,Fitzroy,-0.7319614385504395,0.05014164601293078,306,64,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Montipora,Mackay Whitsunday,-1.364071916567807,0.05014164601293078,306,64,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Montipora,Wet Tropics,-0.010297586837059641,0.05014164601293078,306,64,fit,0.15042493803879234
+heatwave_x_six_management_interaction,Pocilloporidae,Burdekin,0.20645721358036934,0.18573240913132452,378,76,fit,0.37146481826264904
+heatwave_x_six_management_interaction,Pocilloporidae,Cape York,1.0538265940125686,0.18573240913132452,378,76,fit,0.37146481826264904
+heatwave_x_six_management_interaction,Pocilloporidae,Fitzroy,0.3350914662072503,0.18573240913132452,378,76,fit,0.37146481826264904
+heatwave_x_six_management_interaction,Pocilloporidae,Mackay Whitsunday,-0.2262583120008893,0.18573240913132452,378,76,fit,0.37146481826264904
+heatwave_x_six_management_interaction,Pocilloporidae,Wet Tropics,0.0924500669982116,0.18573240913132452,378,76,fit,0.37146481826264904
+heatwave_x_six_management_interaction,Other,Burdekin,0.5287985652437937,0.3126989492257645,457,88,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Other,Cape York,0.23197625701950786,0.3126989492257645,457,88,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Other,Fitzroy,0.15178897141218062,0.3126989492257645,457,88,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Other,Mackay Whitsunday,0.0645429547507766,0.3126989492257645,457,88,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Other,Wet Tropics,0.42570088032887893,0.3126989492257645,457,88,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Porites,Burdekin,0.11260960440785316,0.3765896982236172,433,84,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Porites,Cape York,-0.01583833004174752,0.3765896982236172,433,84,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Porites,Fitzroy,0.8296159666758265,0.3765896982236172,433,84,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Porites,Mackay Whitsunday,-0.08669387105022207,0.3765896982236172,433,84,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Porites,Wet Tropics,0.15290853022133183,0.3765896982236172,433,84,fit,0.45190763786834065
+heatwave_x_six_management_interaction,Merulinidae,Burdekin,0.037196598030226444,0.5612793562835182,457,88,fit,0.5612793562835182
+heatwave_x_six_management_interaction,Merulinidae,Cape York,-0.04387067899255438,0.5612793562835182,457,88,fit,0.5612793562835182
+heatwave_x_six_management_interaction,Merulinidae,Fitzroy,-0.09633110793916817,0.5612793562835182,457,88,fit,0.5612793562835182
+heatwave_x_six_management_interaction,Merulinidae,Mackay Whitsunday,-0.9851181730376162,0.5612793562835182,457,88,fit,0.5612793562835182
+heatwave_x_six_management_interaction,Merulinidae,Wet Tropics,0.18928620988959738,0.5612793562835182,457,88,fit,0.5612793562835182

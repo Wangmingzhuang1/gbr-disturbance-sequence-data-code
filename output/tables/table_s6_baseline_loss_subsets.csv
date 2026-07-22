@@ -1,4 +1,4 @@
 subset,definition,n_observations,n_reefs,r_squared,baseline_beta,p
-Full event-year matrix,Target reef-years with baseline and nadir hard-coral cover available,525,92,0.3290151928548595,0.5003727045913801,2.9347438422065133e-47
-Positive-loss subset,Full matrix restricted to absolute loss >= 0,319,90,0.3756775239709702,0.4943946725812805,2.714864257709002e-34
-Clean-event subset,Target reef-years with no additional storm or heatwave in the 2 years before or after the target event,187,79,0.4278058386693241,0.6065518972924984,3.325502333877836e-24
+Full analysis dataset,Disturbance-response observations with baseline and nadir hard-coral cover available,525,92,0.3290151928548595,0.5003727045913801,2.9347438422065133e-47
+Positive-loss subset,Full dataset restricted to absolute loss >= 0,319,90,0.3756775239709702,0.4943946725812805,2.714864257709002e-34
+Clean-event subset,Disturbance-response observations with no additional storm or heatwave in the 2 years before or after the study event,187,79,0.4278058386693241,0.6065518972924984,3.325502333877836e-24

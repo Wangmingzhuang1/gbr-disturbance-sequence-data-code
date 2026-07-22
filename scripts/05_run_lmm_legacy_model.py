@@ -24,6 +24,7 @@ TERM_LABELS = {
     "recent_max_dhw_z": "Recent maximum DHW",
     "recent_max_wind_z": "Recent maximum wind",
     "yrs_since_last_dist_z": "Return interval",
+    "prior_disturbance_observed": "Prior disturbance observed",
     "cumulative_dhw_5yr_z": "5-year cumulative DHW",
     "cumulative_wind_5yr_z": "5-year cumulative wind",
     "heatwave_years_5yr_z": "5-year heatwave years",
@@ -241,7 +242,7 @@ def tost_row(result, term, equivalence_margin, model, response, n_reefs):
     ci90_low = beta - stats.norm.ppf(0.95) * se
     ci90_high = beta + stats.norm.ppf(0.95) * se
     return {
-        "table": "Table S21",
+        "table": "Table S18",
         "model": model,
         "model_family": "TOST using reef-cluster robust OLS estimate",
         "response": response,
@@ -585,7 +586,8 @@ def variable_dictionary():
             ["storm_years_wyr", "Historical storm-year count", "Years", "Derived", "Number of previous w years with maximum wind >= 17.5 m s-1"],
             ["max_consecutive_heatwave_wyr", "Maximum consecutive heatwave run", "Years", "Derived", "Longest run of heatwave years within the previous w years"],
             ["max_consecutive_storm_wyr", "Maximum consecutive storm run", "Years", "Derived", "Longest run of storm years within the previous w years"],
-            ["yrs_since_last_dist", "Return interval", "Years", "Derived", "Years since most recent prior heatwave or storm, capped at 10 years"],
+            ["yrs_since_last_dist", "Return interval", "Years", "Derived", "Years since the most recent prior heatwave or storm; coded as 10 when no prior disturbance is observed"],
+            ["prior_disturbance_observed", "Prior disturbance observed", "Binary", "Derived", "1 when at least one earlier heatwave or storm is observed; 0 otherwise"],
             ["event_period", "Target-event period", "Categorical", "Derived", "pre-2016, 2016-2020, or 2021-2025"],
             ["sector", "Great Barrier Reef monitoring sector", "Categorical", "AIMS LTMP", "Used for spatial-sector fixed-effect sensitivity analysis"],
         ],
@@ -798,7 +800,7 @@ def dhw_threshold_sensitivity(df):
         ci_low, ci_high = result.conf_int().loc[term].tolist()
         rows.append(
             {
-                "table": "Table S20",
+                "table": "Table S17",
                 "model": "DHW-threshold recurrence sensitivity",
                 "model_family": "reef-cluster robust OLS",
                 "response": "loss_abs",
@@ -914,12 +916,12 @@ def main():
         index=False,
     )
     diagnostic_summary(df, recurrence_formula).to_csv(
-        os.path.join(TABLE_DIR, "table_s10_vif_and_sample_diagnostics.csv"),
+        os.path.join(TABLE_DIR, "table_s9_vif_and_sample_diagnostics.csv"),
         index=False,
     )
     threshold_table = dhw_threshold_sensitivity(df)
     threshold_table.to_csv(
-        os.path.join(TABLE_DIR, "table_s20_dhw_threshold_sensitivity.csv"),
+        os.path.join(TABLE_DIR, "table_s17_dhw_threshold_sensitivity.csv"),
         index=False,
     )
     print("\nDHW-threshold sensitivity")
@@ -1161,6 +1163,44 @@ def main():
         )
     )
 
+    if "prior_disturbance_observed" in df.columns:
+        interval_indicator_formula = (
+            "loss_abs ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
+            "+ heatwave_years_5yr_z + storm_years_5yr_z "
+            "+ yrs_since_last_dist_z + prior_disturbance_observed + C(event_type)"
+        )
+        interval_indicator_result = robust_ols(df, interval_indicator_formula)
+        diagnostic_rows.extend(
+            model_rows(
+                interval_indicator_result,
+                "Table S8",
+                "Return-interval model with prior-disturbance indicator",
+                "reef-cluster robust OLS",
+                "loss_abs",
+                terms=[
+                    ("heatwave_years_5yr_z", "5-year heatwave years"),
+                    ("yrs_since_last_dist_z", "Return interval"),
+                    ("prior_disturbance_observed", "Prior disturbance observed"),
+                ],
+                n_reefs=df["reef_name"].nunique(),
+                extra={
+                    "estimand_note": (
+                        "Distinguishes records with no observed prior disturbance from records "
+                        "whose observed return interval equals 10 years."
+                    )
+                },
+            )
+        )
+        print_terms(
+            "Return-interval model with prior-disturbance indicator",
+            interval_indicator_result,
+            [
+                ("heatwave_years_5yr_z", "5-year heatwave years"),
+                ("yrs_since_last_dist_z", "Return interval"),
+                ("prior_disturbance_observed", "Prior disturbance observed"),
+            ],
+        )
+
     alternative_specs = [
         (
             "Nadir-cover model",
@@ -1215,6 +1255,89 @@ def main():
             )
         )
         print_terms(model_name, result, [("heatwave_years_5yr_z", "5-year heatwave years")])
+
+    cutoff_scan_rows = []
+    cutoff_results = {}
+    for cutoff in range(5, 21):
+        retained = df[df["baseline_hc"] > cutoff].copy()
+        excluded = df[df["baseline_hc"] <= cutoff].copy()
+        if retained.empty:
+            continue
+        result = robust_ols(retained, retention_cutoff_formula)
+        term = "heatwave_years_5yr_z"
+        ci_low, ci_high = result.conf_int().loc[term]
+        cutoff_results[cutoff] = {
+            "n": int(len(retained)),
+            "beta": float(result.params[term]),
+            "p": float(result.pvalues[term]),
+            "ci_low": float(ci_low),
+            "ci_high": float(ci_high),
+            "excluded_negative_loss_proportion": float((excluded["loss_abs"] < 0).mean()),
+        }
+        if cutoff < 10:
+            interpretation = "Candidate lower bound with unstable excluded sample"
+        elif cutoff == 10:
+            interpretation = "Conservative interpretation screen"
+        elif cutoff < 17:
+            interpretation = "Interpretive-range scan"
+        elif cutoff == 17:
+            interpretation = "External GBR functional reference"
+        else:
+            interpretation = "Broader exclusion, not primary screen"
+        cutoff_scan_rows.append(
+            {
+                "cutoff_excluded": f"<={cutoff}%",
+                "retained_n": int(len(retained)),
+                "excluded_n": int(len(excluded)),
+                "retention_beta": float(result.params[term]),
+                "p": float(result.pvalues[term]),
+                "ci_95": f"[{ci_low:.3f}, {ci_high:.3f}]",
+                "excluded_negative_loss_proportion": float((excluded["loss_abs"] < 0).mean()),
+                "interpretation": interpretation,
+            }
+        )
+    pd.DataFrame(cutoff_scan_rows).to_csv(
+        os.path.join(TABLE_DIR, "table_s19_baseline_interpretation_cutoff_scan.csv"),
+        index=False,
+    )
+
+    c10 = cutoff_results[10]
+    c17 = cutoff_results[17]
+    zone_rows = [
+        {
+            "zone": "<=10%",
+            "interpretation": "High-caution baseline band",
+            "rule": "Do not interpret low absolute loss as resistance, adaptation or ecological memory without independent support.",
+            "evidence": (
+                f"At the 10% cutoff, the retained subset shows a positive heatwave-recurrence association "
+                f"with raw retention (N = {c10['n']}, beta = {c10['beta']:.3f}, P = {c10['p']:.3f}), "
+                f"while excluded low-baseline observations have a high negative-loss frequency "
+                f"({c10['excluded_negative_loss_proportion']:.3f})."
+            ),
+            "role_in_manuscript": "Exploratory conservative interpretation screen derived from this study's sensitivity analysis, not a prespecified ecological threshold.",
+        },
+        {
+            "zone": "10-17%",
+            "interpretation": "Interpretive range",
+            "rule": "Baseline limitation remains plausible; interpret absolute loss together with retention, response-window timing, and benthic composition.",
+            "evidence": "Cutoff scans from 11-16% retain positive retention coefficients, while the negative-loss frequency among excluded observations remains high.",
+            "role_in_manuscript": "Range used to organize interpretation between two references; it is not an ecological threshold or a data-derived transition zone.",
+        },
+        {
+            "zone": ">17%",
+            "interpretation": "Above the external functional reference",
+            "rule": "Low-baseline constraint is reduced, but higher retention still cannot be interpreted as adaptation without organism-level evidence.",
+            "evidence": (
+                f"At the 17% cutoff, the retained subset has N = {c17['n']}, beta = {c17['beta']:.3f}, "
+                f"P = {c17['p']:.3g}."
+            ),
+            "role_in_manuscript": "External GBR functional reference, not a threshold inferred from the present data.",
+        },
+    ]
+    pd.DataFrame(zone_rows).to_csv(
+        os.path.join(TABLE_DIR, "table_s20_baseline_interpretation_zones.csv"),
+        index=False,
+    )
 
     retention_baseline_formula = (
         "retention ~ baseline_hc_z + recent_max_dhw_z + recent_max_wind_z "
@@ -1412,7 +1535,7 @@ def main():
             spatial_equivalence_rows.extend(
                 model_rows(
                     sector_result,
-                    "Table S21",
+                    "Table S18",
                     "Sector-stratified recurrence model",
                     "reef-cluster robust OLS",
                     "loss_abs",
@@ -1454,7 +1577,7 @@ def main():
     )
 
     pd.DataFrame(spatial_equivalence_rows).to_csv(
-        os.path.join(TABLE_DIR, "table_s21_spatial_and_retention_equivalence.csv"),
+        os.path.join(TABLE_DIR, "table_s18_spatial_and_retention_equivalence.csv"),
         index=False,
     )
 

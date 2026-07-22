@@ -1,10 +1,10 @@
 sample,definition,n_observations,n_reefs,first_year,last_year
-Full event-year matrix,Target reef-years with baseline and nadir hard-coral cover available,525,92,1987,2025
-Positive-loss subset,Full matrix restricted to loss_abs >= 0,319,90,1988,2025
-Clean-event subset,Target reef-years with no additional storm or heatwave in the 2 years before or after the target event,187,79,1987,2024
-Event type: Concurrent,Target-year event classification,45,31,2017,2024
-Event type: Heatwave_Only,Target-year event classification,301,89,1987,2025
-Event type: Storm_Only,Target-year event classification,179,80,1988,2024
+Full analysis dataset,Disturbance-response observations with baseline and nadir hard-coral cover available,525,92,1987,2025
+Positive-loss subset,Full dataset restricted to loss_abs >= 0,319,90,1988,2025
+Clean-event subset,Disturbance-response observations with no additional storm or heatwave in the 2 years before or after the study event,187,79,1987,2024
+Event type: Concurrent,Study-event type,45,31,2017,2024
+Event type: Heatwave_Only,Study-event type,301,89,1987,2025
+Event type: Storm_Only,Study-event type,179,80,1988,2024
 5-year history class: Mixed history,Previous 5-year disturbance-history class,78,33,1989,2025
 5-year history class: No prior disturbance,Previous 5-year disturbance-history class,192,84,1987,2024
 5-year history class: Storm-only history,Previous 5-year disturbance-history class,64,48,1989,2020

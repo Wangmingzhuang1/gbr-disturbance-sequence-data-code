@@ -2,6 +2,8 @@
 
 This repository contains the processed CSV inputs, derived analysis matrices, analysis scripts and machine-readable result tables needed to reproduce the manuscript analyses.
 
+The reproducibility workflow starts from integrated reef-year matrices. In particular, reef-level annual maximum wind speed (`max_wind_ms`) is supplied in the processed disturbance data and is not regenerated here from raw tropical-cyclone tracks. The public cyclone links below document the upstream source provenance; they are not direct runtime inputs to the deposited analysis scripts.
+
 ## Included directly
 
 The following files are included because they are compact and required for reproducibility:
@@ -24,41 +26,31 @@ The following files are included because they are compact and required for repro
 - `output/tables/table_s7_upper_quantile_boundary_check.csv`
 - `output/tables/table_s8_response_metric_dependence_sensitivity.csv`
 - `output/tables/table_s9_ecological_sensitivity.csv`
-- `output/tables/table_s10_vif_and_sample_diagnostics.csv`
-- `output/tables/table_s11_composition_data_diagnostics.csv`
-- `output/tables/table_s12_composition_grouped_summary.csv`
-- `output/tables/table_s13_composition_reorganization_models.csv`
-- `output/tables/table_s14_composition_response_models.csv`
-- `output/tables/table_s15_composition_denominator_sensitivity.csv`
-- `output/tables/table_s16_all_category_reorganization_models.csv`
-- `output/tables/table_s17_category_to_loss_sensitivity.csv`
-- `output/tables/table_s18_category_availability.csv`
-- `output/tables/table_s19_storm_category_reorganization_models.csv`
-- `output/tables/table_s20_dhw_threshold_sensitivity.csv`
-- `output/tables/table_s21_spatial_and_retention_equivalence.csv`
-- `analysis/baseline_cover_threshold_validation/results/*.csv`
+- `output/tables/table_s9_vif_and_sample_diagnostics.csv`
+- `output/tables/table_s10_composition_data_diagnostics.csv`
+- `output/tables/table_s11_composition_association_models.csv`
+- `output/tables/table_s11_composition_grouped_summary.csv`
+- `output/tables/table_s12_composition_response_models.csv`
+- `output/tables/table_s13_composition_denominator_sensitivity.csv`
+- `output/tables/table_s14_all_category_heatwave_scan.csv`
+- `output/tables/table_s14_category_availability.csv`
+- `output/tables/table_s15_category_to_loss_sensitivity.csv`
+- `output/tables/table_s16_storm_category_reorganization_models.csv`
+- `output/tables/table_s17_dhw_threshold_sensitivity.csv`
+- `output/tables/table_s18_spatial_and_retention_equivalence.csv`
+- `output/tables/table_s19_baseline_interpretation_cutoff_scan.csv`
+- `output/tables/table_s20_baseline_interpretation_zones.csv`
+- `analysis/sector_hard_coral_supplement/sector_stratified_hard_coral_scan.csv`
+- `analysis/sector_hard_coral_supplement/heatwave_sector_interaction_hard_coral.csv`
+- `analysis/sector_hard_coral_supplement/baseline_gt10_hard_coral_scan.csv`
+- `analysis/sector_hard_coral_supplement/six_management_stratified_hard_coral_scan.csv`
+- `analysis/sector_hard_coral_supplement/six_management_heatwave_interaction_hard_coral.csv`
+- `analysis/sector_hard_coral_supplement/six_management_baseline_gt10_hard_coral_scan.csv`
+- `analysis/sector_hard_coral_supplement/reef_six_management_area_mapping.csv`
 
-The `analysis/baseline_cover_threshold_validation` directory also includes the
-script and text outputs needed to reproduce the baseline interpretation-zone,
-threshold-sensitivity, and nonlinear spline-heterogeneity diagnostics.
+## Supplementary-table numbering
 
-## Submitted supplementary-table mapping
-
-The repository retains source tables S1-S21 as separate machine-readable outputs. The submitted Supplementary Information uses the following consolidated S1-S18 mapping:
-
-| Submitted table | Machine-readable source table(s) |
-|---|---|
-| S1-S8 | source S1-S8 |
-| S9 | source S9 + S10 |
-| S10 | source S11 |
-| S11 | source S12 + S13 |
-| S12 | source S14 |
-| S13 | source S15 |
-| S14 | source S16 + S18 |
-| S15 | source S17 |
-| S16 | source S19 |
-| S17 | source S20 |
-| S18 | source S21 |
+The current analysis scripts write the manuscript-facing S1-S20 numbering directly. Related panels or diagnostics may be stored in separate CSV files under the same table number.
 
 ## Public source data
 
@@ -92,4 +84,4 @@ The repository excludes large or non-essential binary assets, including:
 - reference PDFs
 - manuscript drafts, cover letters and submission-management notes
 
-The map script can run without the optional shapefiles; when those files are absent, it renders the reef points and base geography using the included CSV coordinates and public map features. The composition workflow can run from the merged file `data/coral_species_data_all.csv` without needing the original per-reef directory layout. Generated figure binaries can be reproduced from the deposited processed data and scripts.
+The map script can run without the optional shapefiles; when those files are absent, it renders the reef points and base geography using the included CSV coordinates and public map features. The six-management-area sensitivity analysis uses the included reef-to-management-area mapping when the NRM boundary shapefile is unavailable. The composition workflow can run from the merged file `data/coral_species_data_all.csv` without needing the original per-reef directory layout. Generated figure binaries can be reproduced from the deposited processed data and scripts.

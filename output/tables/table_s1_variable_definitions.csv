@@ -1,24 +1,25 @@
 variable,definition,unit,source,construction_rule
 reef_name,Reef identifier,Categorical,AIMS LTMP,Used for reef-cluster robust standard errors and GEE grouping
-event_year,Target disturbance year,Year,AIMS-aligned environmental records,"Years crossing heatwave, storm or concurrent thresholds"
-event_type,Target event class,Categorical,Derived,"Heatwave_Only, Storm_Only or Concurrent"
-baseline_year,Baseline observation year,Year,AIMS LTMP,Year of the most recent non-missing hard-coral cover observation within 3 years before the target year
-nadir_year,Nadir observation year,Year,AIMS LTMP,Year of the minimum hard-coral cover observation from the target year through 3 years after the target year
-nadir_event_interval,Nadir timing relative to target event,Years,Derived,nadir_year - event_year
-baseline_hc,Pre-disturbance hard-coral cover,% cover,AIMS LTMP,Most recent non-missing observation within 3 years before target year
-nadir_hc,Post-disturbance nadir hard-coral cover,% cover,AIMS LTMP,Minimum non-missing observation from target year through 3 years after target year
+event_year,Study-event year,Year,AIMS-aligned environmental records,"Years meeting or exceeding heatwave, storm or concurrent thresholds"
+event_type,Study-event type,Categorical,Derived,"Heatwave_Only, Storm_Only or Concurrent"
+baseline_year,Baseline observation year,Year,AIMS LTMP,Year of the most recent non-missing hard-coral cover observation within 3 years before the event year
+nadir_year,Nadir observation year,Year,AIMS LTMP,Year of the minimum hard-coral cover observation from the event year through 3 years after the event year
+nadir_event_interval,Nadir timing relative to study event,Years,Derived,nadir_year - event_year
+baseline_hc,Pre-disturbance hard-coral cover,% cover,AIMS LTMP,Most recent non-missing observation within 3 years before event year
+nadir_hc,Post-disturbance nadir hard-coral cover,% cover,AIMS LTMP,Minimum non-missing observation from event year through 3 years after event year
 loss_abs,Absolute hard-coral cover loss,percentage points,Derived,baseline_hc - nadir_hc
 positive_loss,Positive-only absolute loss,percentage points,Derived,"max(loss_abs, 0)"
 rel_loss_clipped,Clipped relative loss,Proportion,Derived,"clip(loss_abs / baseline_hc, -1, 1)"
-retention,Post-event proportional retention,Proportion,Derived,nadir_hc / baseline_hc
-recent_max_dhw,Current thermal exposure,Degree C-weeks,NOAA Coral Reef Watch,Maximum DHW in the target reef-year
-recent_max_wind,Current wind exposure,m s-1,Australian Bureau of Meteorology,Maximum wind speed in the target reef-year
+retention,Post-disturbance proportional retention,Proportion,Derived,nadir_hc / baseline_hc
+recent_max_dhw,Event-year maximum DHW,Degree C-weeks,Integrated ecological-environmental analysis matrix,Maximum DHW matched by the AIMS monitoring-year field
+recent_max_wind,Event-year maximum wind speed speed,m s-1,Integrated ecological-environmental analysis matrix,Maximum wind speed matched by the AIMS monitoring-year field
 cumulative_dhw_wyr,Historical cumulative DHW,Degree C-weeks,Derived,Sum of annual maximum DHW over the previous w years
 cumulative_wind_wyr,Historical cumulative storm-wind load,m s-1,Derived,Sum of annual maximum wind only for storm years over the previous w years
 heatwave_years_wyr,Historical heatwave-year count,Years,Derived,Number of previous w years with maximum DHW >= 4 degree C-weeks
 storm_years_wyr,Historical storm-year count,Years,Derived,Number of previous w years with maximum wind >= 17.5 m s-1
 max_consecutive_heatwave_wyr,Maximum consecutive heatwave run,Years,Derived,Longest run of heatwave years within the previous w years
 max_consecutive_storm_wyr,Maximum consecutive storm run,Years,Derived,Longest run of storm years within the previous w years
-yrs_since_last_dist,Return interval,Years,Derived,"Years since most recent prior heatwave or storm, capped at 10 years"
-event_period,Target-event period,Categorical,Derived,"pre-2016, 2016-2020, or 2021-2025"
+yrs_since_last_dist,Time since the most recent disturbance,Years,Derived,Years since the most recent prior heatwave or storm; assigned 10 solely for model coding when no prior disturbance is observed
+prior_disturbance_observed,Prior disturbance observed,Binary,Derived,1 when at least one earlier heatwave or storm is observed; 0 otherwise
+event_period,Study-event period,Categorical,Derived,"pre-2016, 2016-2020, or 2021-2025"
 sector,Great Barrier Reef monitoring sector,Categorical,AIMS LTMP,Used for spatial-sector fixed-effect sensitivity analysis
