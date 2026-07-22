@@ -4,9 +4,9 @@ reef-year category count,HARD CORAL,1462,7.0,0.0,7.0,7.0,7.0,Number of reported 
 reef-year category count,MACROALGAE,1462,5.46922024623803,0.8716835697530113,4.0,6.0,7.0,Number of reported reefpage categories per reef-year-variable.
 reef-year category count,SOFT CORAL,1462,7.0,0.0,7.0,7.0,7.0,Number of reported reefpage categories per reef-year-variable.
 reef matching,matched reefs,92,,,,,,Composition reefs matched to master ecological matrix after reef-name normalization.
-event-level availability,baseline composition available,466,0.8876190476190476,,,,,Study events with matched pre-disturbance composition.
-event-level availability,nadir composition available,438,0.8342857142857143,,,,,Study events with matched nadir-year composition.
-event-level availability,baseline and nadir composition available,422,0.8038095238095239,,,,,Study events with both pre-disturbance and nadir-year composition.
+event-level availability,baseline composition available,466,0.8876190476190476,,,,,Target events with matched pre-disturbance composition.
+event-level availability,nadir composition available,438,0.8342857142857143,,,,,Target events with matched nadir-year composition.
+event-level availability,baseline and nadir composition available,422,0.8038095238095239,,,,,Target events with both pre-disturbance and nadir-year composition.
 hard-coral validation,common reef-years,1447,,,,,,Reef-years with both HC_cover and summed modelled hard-coral categories.
 hard-coral validation,category sum minus HC_cover,1447,-0.23578362699922586,0.19635555052874715,-1.2039819007505912,-0.15633678652662297,0.596342669106301,Difference in percentage points.
 hard-coral validation,absolute category-sum difference,1447,0.23663396219631108,0.19532923772339345,0.01887484598486111,0.1564506132360819,1.2039819007505912,Absolute difference in percentage points.
