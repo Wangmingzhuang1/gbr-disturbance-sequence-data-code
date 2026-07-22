@@ -19,6 +19,7 @@ heatwave_years_wyr,Historical heatwave-year count,Years,Derived,Number of previo
 storm_years_wyr,Historical storm-year count,Years,Derived,Number of previous w years with maximum wind >= 17.5 m s-1
 max_consecutive_heatwave_wyr,Maximum consecutive heatwave run,Years,Derived,Longest run of heatwave years within the previous w years
 max_consecutive_storm_wyr,Maximum consecutive storm run,Years,Derived,Longest run of storm years within the previous w years
-yrs_since_last_dist,Return interval,Years,Derived,"Years since most recent prior heatwave or storm, capped at 10 years"
+yrs_since_last_dist,Return interval,Years,Derived,Years since the most recent prior heatwave or storm; coded as 10 when no prior disturbance is observed
+prior_disturbance_observed,Prior disturbance observed,Binary,Derived,1 when at least one earlier heatwave or storm is observed; 0 otherwise
 event_period,Target-event period,Categorical,Derived,"pre-2016, 2016-2020, or 2021-2025"
 sector,Great Barrier Reef monitoring sector,Categorical,AIMS LTMP,Used for spatial-sector fixed-effect sensitivity analysis

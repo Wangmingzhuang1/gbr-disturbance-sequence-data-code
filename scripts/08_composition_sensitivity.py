@@ -78,6 +78,18 @@ FIGURE6_HARD_CORAL_CATEGORIES = [
 ]
 
 
+def q_to_stars(q_value):
+    if pd.isna(q_value):
+        return ""
+    if q_value < 0.001:
+        return "***"
+    if q_value < 0.01:
+        return "**"
+    if q_value < 0.05:
+        return "*"
+    return ""
+
+
 def normalize_reef_name(value):
     text = str(value).lower().replace("&", "and")
     text = re.sub(r"no\.?\s*([0-9]+)", r"no \1", text)
@@ -448,7 +460,7 @@ def grouped_composition_table(event):
             values = group[col].dropna()
             rows.append(
                 {
-                    "table": "Table S12",
+                    "table": "Table S11",
                     "heatwave_group": group_name,
                     "metric": col,
                     "label": label,
@@ -504,7 +516,7 @@ def reorganization_models(event):
         result = cluster_ols(f"{outcome} ~ {MAIN_CONTROL_FORMULA}", df)
         rows.append(
             model_row(
-                "Table S13",
+                "Table S11",
                 "Prior heatwave recurrence predicting baseline composition",
                 "reef-cluster robust OLS",
                 outcome,
@@ -551,7 +563,7 @@ def response_models(event):
         for term, label in terms:
             rows.append(
                 model_row(
-                    "Table S14",
+                    "Table S12",
                     model_name,
                     "reef-cluster robust OLS",
                     "loss_abs",
@@ -590,7 +602,7 @@ def response_models(event):
             term = f"{metric}_z"
             rows.append(
                 model_row(
-                    "Table S14",
+                    "Table S12",
                     model_name,
                     "reef-cluster robust OLS",
                     "retention",
@@ -630,7 +642,7 @@ def denominator_sensitivity(event):
             result = cluster_ols(f"{outcome} ~ {MAIN_CONTROL_FORMULA}", df)
             rows.append(
                 model_row(
-                    "Table S15",
+                    "Table S13",
                     f"Denominator sensitivity: {label} proportion",
                     "reef-cluster robust OLS",
                     outcome,
@@ -663,7 +675,7 @@ def all_category_reorganization_models(
     category_map,
     predictor="heatwave_years_5yr_z",
     predictor_label="Prior heatwave recurrence",
-    table_name="Table S16",
+    table_name="Table S14",
     formula_controls=MAIN_CONTROL_FORMULA,
 ):
     rows = []
@@ -734,7 +746,7 @@ def category_to_loss_sensitivity(event, category_map):
             ci_low, ci_high = result.conf_int().loc[term].tolist()
             rows.append(
                 {
-                    "table": "Table S17",
+                    "table": "Table S15",
                     "model": "Category-informed absolute-loss sensitivity",
                     "model_family": "reef-cluster robust OLS",
                     "variable": item.variable,
@@ -771,7 +783,7 @@ def category_availability_table(event, category_map):
         available = event[metric].notna()
         rows.append(
             {
-                "table": "Table S18",
+                "table": "Table S14",
                 "variable": item.variable,
                 "category": item.category,
                 "metric": metric,
@@ -904,10 +916,13 @@ def coefficient_panel(ax, table, rows, title, xlabel="Heatwave-recurrence coeffi
     labels = []
     for row in plot.itertuples(index=False):
         name = f"{row.category} ({row.variable.title()})" if include_variable else row.category
-        labels.append(f"{name}\nq={row.q_all:.3f}" if pd.notna(row.q_all) else name)
+        labels.append(name)
     y = np.arange(len(plot))
     colors = np.where(plot["ci_low"].gt(0) | plot["ci_high"].lt(0), "#a65e4e", "#7a8793")
     ax.axvline(0, color="0.72", lw=0.9, zorder=0)
+    x_min = float(plot["ci_low"].min())
+    x_max = float(plot["ci_high"].max())
+    x_span = x_max - x_min if x_max > x_min else 1.0
     for i, row in enumerate(plot.itertuples(index=False)):
         color = colors[i]
         ax.errorbar(
@@ -921,9 +936,13 @@ def coefficient_panel(ax, table, rows, title, xlabel="Heatwave-recurrence coeffi
             zorder=1,
         )
         ax.scatter(row.beta, i, s=24, color=color, zorder=2)
+        stars = q_to_stars(row.q_all)
+        if stars:
+            ax.text(row.ci_high + 0.06 * x_span, i, stars, ha="left", va="center", fontsize=7.5, fontweight="bold")
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
+    ax.set_xlim(x_min - 0.12 * x_span, x_max + 0.28 * x_span)
     ax.set_xlabel(xlabel)
     ax.set_title(title, loc="left", fontweight="bold")
 
@@ -1013,7 +1032,7 @@ def make_figure6(event, all_reorg, response_table):
     ax.set_title("D  Composition-control sensitivity", loc="left", fontweight="bold")
 
     fig.tight_layout(w_pad=1.4, h_pad=1.4)
-    out_base = os.path.join(FIGURE_DIR, "figure_06")
+    out_base = os.path.join(FIGURE_DIR, "figure_05")
     fig.savefig(out_base + ".pdf", bbox_inches="tight")
     fig.savefig(out_base + ".jpg", dpi=600, bbox_inches="tight")
     plt.close(fig)
@@ -1048,21 +1067,21 @@ def write_outputs():
         category_map,
         predictor="storm_years_5yr_z",
         predictor_label="Prior storm recurrence",
-        table_name="Table S19",
+        table_name="Table S16",
         formula_controls=STORM_CONTROL_FORMULA,
     )
     category_loss = category_to_loss_sensitivity(event, category_map)
     category_availability = category_availability_table(event, category_map)
 
-    diagnostics.to_csv(os.path.join(TABLE_DIR, "table_s11_composition_data_diagnostics.csv"), index=False)
-    grouped.to_csv(os.path.join(TABLE_DIR, "table_s12_composition_grouped_summary.csv"), index=False)
-    reorg.to_csv(os.path.join(TABLE_DIR, "table_s13_composition_reorganization_models.csv"), index=False)
-    response.to_csv(os.path.join(TABLE_DIR, "table_s14_composition_response_models.csv"), index=False)
-    denom.to_csv(os.path.join(TABLE_DIR, "table_s15_composition_denominator_sensitivity.csv"), index=False)
-    all_reorg.to_csv(os.path.join(TABLE_DIR, "table_s16_all_category_reorganization_models.csv"), index=False)
-    category_loss.to_csv(os.path.join(TABLE_DIR, "table_s17_category_to_loss_sensitivity.csv"), index=False)
-    category_availability.to_csv(os.path.join(TABLE_DIR, "table_s18_category_availability.csv"), index=False)
-    storm_reorg.to_csv(os.path.join(TABLE_DIR, "table_s19_storm_category_reorganization_models.csv"), index=False)
+    diagnostics.to_csv(os.path.join(TABLE_DIR, "table_s10_composition_data_diagnostics.csv"), index=False)
+    grouped.to_csv(os.path.join(TABLE_DIR, "table_s11_composition_grouped_summary.csv"), index=False)
+    reorg.to_csv(os.path.join(TABLE_DIR, "table_s11_composition_association_models.csv"), index=False)
+    response.to_csv(os.path.join(TABLE_DIR, "table_s12_composition_response_models.csv"), index=False)
+    denom.to_csv(os.path.join(TABLE_DIR, "table_s13_composition_denominator_sensitivity.csv"), index=False)
+    all_reorg.to_csv(os.path.join(TABLE_DIR, "table_s14_all_category_heatwave_scan.csv"), index=False)
+    category_loss.to_csv(os.path.join(TABLE_DIR, "table_s15_category_to_loss_sensitivity.csv"), index=False)
+    category_availability.to_csv(os.path.join(TABLE_DIR, "table_s14_category_availability.csv"), index=False)
+    storm_reorg.to_csv(os.path.join(TABLE_DIR, "table_s16_storm_category_reorganization_models.csv"), index=False)
     make_si_figure(event, response)
     make_figure6(event, all_reorg, response)
 

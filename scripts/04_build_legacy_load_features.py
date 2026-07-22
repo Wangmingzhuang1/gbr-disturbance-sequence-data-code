@@ -114,6 +114,7 @@ def build_matrix():
             "rel_loss": loss_abs / baseline_hc if baseline_hc > 0 else np.nan,
             "rel_loss_clipped": np.clip(loss_abs / baseline_hc, -1, 1) if baseline_hc > 0 else np.nan,
             "yrs_since_last_dist": yrs_since_last,
+            "prior_disturbance_observed": int(not disturbances.empty),
         }
 
         # Baseline ecological covariates (most recent non-missing value in pre-event window)

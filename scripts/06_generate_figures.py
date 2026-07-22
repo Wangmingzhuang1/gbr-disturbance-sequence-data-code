@@ -229,9 +229,10 @@ def model_terms(data, formula, terms, method="ols"):
     return pd.DataFrame(rows)
 
 
-def plot_forest(ax, table, labels, colors, xlabel, xlim=None):
+def plot_forest(ax, table, labels, colors, xlabel, xlim=None, show_stars=False):
     y = np.arange(len(table))
-    for idx, row in table.reset_index(drop=True).iterrows():
+    plot_table = table.reset_index(drop=True)
+    for idx, row in plot_table.iterrows():
         ax.errorbar(
             row["coef"],
             idx,
@@ -248,8 +249,56 @@ def plot_forest(ax, table, labels, colors, xlabel, xlim=None):
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
     ax.set_xlabel(xlabel)
+    if show_stars and "p" in plot_table.columns:
+        x_min = float(plot_table["low"].min())
+        x_max = float(plot_table["high"].max())
+        x_span = x_max - x_min if x_max > x_min else 1.0
+        star_x = plot_table["high"].astype(float) + 0.06 * x_span
+        ax.set_xlim(x_min - 0.10 * x_span, max(float(star_x.max()), x_max) + 0.10 * x_span)
+        for idx, (x_pos, p_value) in enumerate(zip(star_x, plot_table["p"])):
+            stars = p_to_stars(float(p_value))
+            if stars:
+                ax.text(x_pos, idx, stars, ha="left", va="center", fontsize=7.5, fontweight="bold")
     if xlim is not None:
         ax.set_xlim(xlim)
+
+
+def p_to_stars(p_value):
+    if p_value < 0.001:
+        return "***"
+    if p_value < 0.01:
+        return "**"
+    if p_value < 0.05:
+        return "*"
+    return ""
+
+
+def holm_adjust(p_values):
+    values = np.asarray(p_values, dtype=float)
+    order = np.argsort(values)
+    adjusted = np.empty_like(values)
+    running_max = 0.0
+    n_values = len(values)
+    for rank, idx in enumerate(order):
+        value = min((n_values - rank) * values[idx], 1.0)
+        running_max = max(running_max, value)
+        adjusted[idx] = running_max
+    return adjusted
+
+
+def add_star_labels(ax, x_positions, p_values, y_position):
+    for x_position, p_value in zip(x_positions, p_values):
+        stars = p_to_stars(p_value)
+        if stars:
+            ax.text(
+                x_position,
+                y_position,
+                stars,
+                ha="center",
+                va="bottom",
+                fontsize=8,
+                fontweight="bold",
+            )
 
 
 def figure_02(eco, legacy):
@@ -281,8 +330,9 @@ def figure_02(eco, legacy):
     axes = axes.ravel()
 
     axes[0].plot(yearly.index, yearly["heatwave_pct"], color=THERMAL, lw=1.6, label="Heatwave")
+    axes[0].scatter(yearly.index, yearly["heatwave_pct"], s=10, color=THERMAL, alpha=0.65)
     axes[0].plot(yearly.index, yearly["storm_pct"], color=STORM, lw=1.2, label="Storm")
-    axes[0].fill_between(yearly.index, yearly["heatwave_pct"], color=THERMAL, alpha=0.12)
+    axes[0].scatter(yearly.index, yearly["storm_pct"], s=10, color=STORM, alpha=0.65)
     axes[0].set_xlabel("Year")
     axes[0].set_ylabel("Exposed reefs (%)")
     axes[0].legend(frameon=False, loc="upper left")
@@ -324,13 +374,20 @@ def figure_02(eco, legacy):
 
 
 def figure_03(legacy):
-    fig = plt.figure(figsize=(7.1, 5.35))
-    gs = fig.add_gridspec(2, 2)
+    fig_w, fig_h = 7.1, 5.35
+    fig = plt.figure(figsize=(fig_w, fig_h))
+    panel_side_in = 1.95
+    panel_w = panel_side_in / fig_w
+    panel_h = panel_side_in / fig_h
+    left_x = 0.095
+    right_x = 0.635
+    top_y = 0.57
+    bottom_y = 0.11
     axes = [
-        fig.add_subplot(gs[0, 0]),
-        fig.add_subplot(gs[0, 1]),
-        fig.add_subplot(gs[1, 0]),
-        fig.add_subplot(gs[1, 1]),
+        fig.add_axes([left_x, top_y, panel_w, panel_h]),
+        fig.add_axes([right_x, top_y, panel_w, panel_h]),
+        fig.add_axes([left_x, bottom_y, panel_w, panel_h]),
+        fig.add_axes([right_x, bottom_y, panel_w, panel_h]),
     ]
 
     axes[0].scatter(legacy["baseline_hc"], legacy["loss_abs"], s=9, color=NEUTRAL, alpha=0.38)
@@ -377,6 +434,17 @@ def figure_03(legacy):
     axes[1].axhline(0, color="#999999", lw=0.8)
     axes[1].set_xlabel("Heatwave years in previous 5 years")
     axes[1].set_ylabel("Absolute hard-coral loss (%)")
+    heatwave_model = robust_ols(legacy, "loss_abs ~ C(heatwave_years_5yr, Treatment(reference=0))")
+    heatwave_pvalues = []
+    heatwave_positions = []
+    for idx, level in enumerate(order):
+        if level == 0:
+            continue
+        term = f"C(heatwave_years_5yr, Treatment(reference=0))[T.{int(level)}]"
+        heatwave_pvalues.append(heatwave_model.pvalues[term])
+        heatwave_positions.append(idx)
+    axes[1].set_ylim(top=70)
+    add_star_labels(axes[1], heatwave_positions, holm_adjust(heatwave_pvalues), 64)
     panel_label(axes[1], "b")
 
     rel_loss_pct = legacy["rel_loss_clipped"] * 100
@@ -394,21 +462,24 @@ def figure_03(legacy):
     axes[2].set_xlim(-105, 105)
     axes[2].set_xlabel("Clipped relative loss (%)")
     axes[2].set_ylabel("Absolute hard-coral loss (%)")
-    cbar = fig.colorbar(scatter, ax=axes[2], fraction=0.046, pad=0.035)
+    cax = fig.add_axes([left_x + panel_w + 0.014, bottom_y + 0.055, 0.012, panel_h * 0.72])
+    cbar = fig.colorbar(scatter, cax=cax)
     cbar.set_label("Baseline hard-coral cover (%)")
     panel_label(axes[2], "c")
 
     table = response_metric_effects(legacy)
+    coef_limit = float(np.nanmax(np.abs(table[["low", "high"]].to_numpy()))) + 0.035
     plot_forest(
         axes[3],
         table,
         table["label"].tolist(),
         table["color"].tolist(),
         "Standardized response coefficient",
+        xlim=(-coef_limit, coef_limit),
     )
+    axes[3].set_ylim(len(table) - 0.72, -0.28)
     panel_label(axes[3], "d")
 
-    fig.tight_layout(w_pad=1.25, h_pad=1.15)
     save_figure(fig, 3)
 
 
@@ -426,7 +497,19 @@ def figure_04(legacy):
         ("yrs_since_last_dist_z", "Return interval", NEUTRAL),
     ]
 
-    fig, axes = plt.subplots(2, 2, figsize=(7.1, 5.45))
+    fig_w, fig_h = 7.1, 5.45
+    fig = plt.figure(figsize=(fig_w, fig_h))
+    panel_side_in = 1.85
+    panel_w = panel_side_in / fig_w
+    panel_h = panel_side_in / fig_h
+    left_x = 0.17
+    right_x = 0.64
+    top_y = 0.59
+    bottom_y = 0.12
+    axes = np.array([
+        [fig.add_axes([left_x, top_y, panel_w, panel_h]), fig.add_axes([right_x, top_y, panel_w, panel_h])],
+        [fig.add_axes([left_x, bottom_y, panel_w, panel_h]), fig.add_axes([right_x, bottom_y, panel_w, panel_h])],
+    ])
     variables = [term[0] for term in terms]
     labels = [term[1] for term in terms]
     colors = [term[2] for term in terms]
@@ -444,7 +527,7 @@ def figure_04(legacy):
             "term": label
         })
     ols_table = pd.DataFrame(ols_rows)
-    plot_forest(axes[0, 0], ols_table, labels, colors, "Cluster-robust OLS coefficient")
+    plot_forest(axes[0, 0], ols_table, labels, colors, "Cluster-robust OLS coefficient", show_stars=True)
     panel_label(axes[0, 0], "a")
 
     # Panel b: GEE coefficients
@@ -460,7 +543,7 @@ def figure_04(legacy):
             "term": label
         })
     gee_table = pd.DataFrame(gee_rows)
-    plot_forest(axes[0, 1], gee_table, labels, colors, "GEE coefficient")
+    plot_forest(axes[0, 1], gee_table, labels, colors, "GEE coefficient", show_stars=True)
     panel_label(axes[0, 1], "b")
 
     # Panel c: pointplot of history class
@@ -504,6 +587,14 @@ def figure_04(legacy):
     axes[1, 0].set_xlabel("Previous 5-year history")
     axes[1, 0].set_ylabel("Absolute hard-coral loss (%)")
     axes[1, 0].tick_params(axis="x", rotation=25)
+    history_model = robust_ols(category, 'loss_abs ~ C(history_class, Treatment(reference="No prior"))')
+    history_terms = [
+        'C(history_class, Treatment(reference="No prior"))[T.Thermal only]',
+        'C(history_class, Treatment(reference="No prior"))[T.Storm only]',
+        'C(history_class, Treatment(reference="No prior"))[T.Mixed]',
+    ]
+    axes[1, 0].set_ylim(top=68)
+    add_star_labels(axes[1, 0], [1, 2, 3], holm_adjust([history_model.pvalues[term] for term in history_terms]), 62)
     panel_label(axes[1, 0], "c")
 
     # Panel d: Dose-response curves
@@ -555,11 +646,10 @@ def figure_04(legacy):
     ax_d.legend(loc="upper left", frameon=False, fontsize=5.8)
     panel_label(ax_d, "d")
 
-    fig.tight_layout(h_pad=1.35, w_pad=1.5)
     save_figure(fig, 4)
 
 
-def figure_05(legacy):
+def si_figure_05_window_sensitivity(legacy):
     exposures = [
         ("cumulative_dhw", "Cumulative DHW"),
         ("heatwave_years", "Heatwave years"),
@@ -667,7 +757,7 @@ def figure_05(legacy):
     panel_label(axes[2], "c")
 
     fig.subplots_adjust(left=0.16, right=0.98, bottom=0.18, top=0.90, wspace=0.64)
-    save_figure(fig, 5)
+    save_si_figure(fig, 5)
 
 
 def add_box(ax, xy, text, color, width=0.24, height=0.16):
@@ -763,11 +853,11 @@ def si_figure_02_metric_framework():
     ax.set_ylim(0, 1)
 
     add_box(ax, (0.04, 0.66), "Prior recurrent\nheat exposure", THERMAL, width=0.20)
-    add_box(ax, (0.04, 0.28), "Current DHW and\nwind exposure", STORM, width=0.20)
+    add_box(ax, (0.04, 0.28), "Event-year maximum\nDHW and maximum\nwind speed", STORM, width=0.20)
 
-    add_box(ax, (0.34, 0.73), "Lower observable\nabsolute loss\nSTRONG", GOLD, width=0.25, height=0.18)
+    add_box(ax, (0.34, 0.73), "Lower observed\nabsolute loss\nSTRONG", GOLD, width=0.25, height=0.18)
     add_box(ax, (0.34, 0.47), "Altered algal and\nmacroalgal baselines\nMODERATE", GREEN, width=0.25, height=0.18)
-    add_box(ax, (0.34, 0.21), "Full-matrix proportional\nretention\nNO INCREASE", "#777777", width=0.25, height=0.18)
+    add_box(ax, (0.34, 0.21), "Full-dataset proportional\nretention\nNO INCREASE", "#777777", width=0.25, height=0.18)
 
     add_box(ax, (0.70, 0.73), "Baseline stock constrains\nlater absolute loss\nSUPPORTED", "#4b6f8f", width=0.26, height=0.18)
     add_box(ax, (0.70, 0.47), "Community filtering or\ndisturbance legacy\nPLAUSIBLE, NOT ISOLATED", "#777777", width=0.26, height=0.18)
@@ -886,15 +976,15 @@ def main():
     figure_03(legacy)
     print("Generating Figure 4...")
     figure_04(legacy)
-    print("Generating Figure 5...")
-    figure_05(legacy)
+    print("Generating SI Figure 5...")
+    si_figure_05_window_sensitivity(legacy)
     print("Generating SI Figure 2...")
     si_figure_02_metric_framework()
     print("Generating SI Figure 3...")
     si_figure_03_residual_diagnostics(legacy)
     print("Generating SI Figure 6...")
     si_figure_06_smooth_heterogeneity(legacy)
-    print("Figures 2-5 and SI Figures 2-3 and 6 generated.")
+    print("Figures 2-4 and SI Figures 2-3, 5 and 6 generated.")
 
 
 if __name__ == "__main__":

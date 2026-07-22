@@ -29,3 +29,6 @@ output/figures/
 *.pdf
 *.svg
 *.png
+
+# Generated narrative summary from the sector hard-coral sensitivity script.
+analysis/sector_hard_coral_supplement/SI_summary.md
